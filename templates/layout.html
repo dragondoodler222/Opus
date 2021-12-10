@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+    
+    </head>
+
+    <body>
+
+        <nav>
+            <div>
+                {% if session.user_id %}
+                    <!-- THINGS TO ADD TO TOP BAR IF LOGGED IN-->
+                {% else %}
+                <!-- THINGS TO ADD TO TOP BAR IF NOT LOGGED IN-->
+                {% endif %}
+            </div>
+        </nav>
+
+        <main>
+            {% block main %}{% endblock %}
+        </main>
+        
+        <footer>
+            <!-- Do we wwant a footer?-->
+        </footer>
+
+    </body>
+
+</html>
