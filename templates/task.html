@@ -69,6 +69,20 @@
   </tbody>
   
 </table>
+<div style="display:flex;justify-content: center;">
+<table class="table emails" style="text-align:center;width:25%;">
+  <tbody>
+    {% for i,c in enumerate(collaborators)%}
+      <tr>
+        <td style="text-align:right;"><a href="/profile/{{c['username']}}">{{c['username']}}</a></td>
+        <td style="text-align:left;">{{c['email']}}</td>
+      </tr>
+    {% endfor %}
+    
+  </tbody>
+</table>
+</div>
+
 <div id="project-modal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
