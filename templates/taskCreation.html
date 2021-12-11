@@ -3,6 +3,11 @@
 {% block title %}
     Task Creation
 {% endblock %}
+{% block styles %}
+
+<link rel="stylesheet" href="../static/css/taskCreation.css">
+
+{% endblock %}
 
 {% block main %}
      <!-- This was basically the template I was thinking for all the stuff yeah-->
@@ -13,6 +18,28 @@
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" type="text"></textarea>
         </div>
+        <div class = "wrapper">
+        	<div class = "title">
+        		<h4>Languages Needed</h4>
+        	</div>
+        	<div class = "content">
+        		<p>Press enter or add a comma after each language</p>
+        		<div class = "tag-box">
+        			<ul>
+        				<li>
+        					html <i class="uit uit-multiply"></i>
+        				</li>
+        			</ul>
+        		</div>
+        	</div>
+        	<div class = "details">
+        		<button>Remove All</button>
+        	</div>
+        </div>
+        <div class="form-group">
+            <input class="form-control" name="languages" placeholder="Languages Needed" type="text">
+        </div>
+
         <button class="btn btn-primary" type="submit">Log In</button>
     </form>
 {% endblock %}
