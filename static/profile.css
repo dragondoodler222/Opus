@@ -9,12 +9,16 @@
 	margin-left: 20px;
 }
 
-.name-section {
+.name-section,.name-wrapper {
 	color: #3d3d3d;
 	padding: 30px 100px;
 	background: white;
 	width: 100%;
 	display: flex;
+}
+.name-wrapper {
+	padding: 30px 0px;
+	display: block;
 }
 
 .information {
@@ -134,3 +138,18 @@ body {
 	justify-content: space-between;
 	width: 100%;
 }
+
+
+h1#greeting {
+	width: 100%;
+	text-align: center;
+	display: block;
+	font-weight: bold;
+	background: rgb(45,70,185);
+background: linear-gradient(32deg, rgba(45,70,185,1) 0%, rgba(240,55,165,1) 100%);
+	-webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+

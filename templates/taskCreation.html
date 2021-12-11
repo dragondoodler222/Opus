@@ -16,13 +16,31 @@
 
 {% block main %}
      <!-- This was basically the template I was thinking for all the stuff yeah-->
+     <div class = "form-div">
+       <div class="above-form">
+       <h2>Create a Task</h2>
+       <h6>Fill out this form to create a task other users can join</h6>
+     </div>
+     
      <div class = "wrap">
-      <h2>Task Creation</h2>
+      
       <form id = "taskform" action="/createTask" method="post">
         <div class="form-group">
-          <label>
+          <label style = "padding-right: 10px;">
             <input autocomplete="off" autofocus class="form-control" name="title" id = "title" placeholder="Name" type="text">
-          </label>            
+          </label>
+          <span class="input-group-btn" style="width:0px;"></span>            
+          <label>
+            <input class="form-control" min=2 max=10 name="cmax" placeholder="Max Collaborators (2-10)" id="cmax" type="number">
+          </label>
+        </div>
+        <div class="form-group" style="padding-top: 10px;">
+          <label style="padding-right: 10px;">
+            <input class="form-control" name="hmin" min=1 onchange="document.getElementById('hmax').min = this.value;" placeholder="Minimum Hours" id="hmin" type="number">
+          </label>
+          <label>
+            <input class="form-control" name="hmax" max = 4096 onchange="document.getElementById('hmin').max = this.value;" placeholder="Maximum Hours" id="hmax" type="number">
+          </label>
         </div>
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" id = "description" type="text"></textarea>
@@ -33,7 +51,7 @@
         <label>
           <div class = "lang-container">
             <div class = "form-group input-container">
-              <div class = "title">
+              <div class = "title" style="text-align: left;">
                 <h4>Languages Needed</h4>
                 <p>Add a comma after each language</p>
               </div>
@@ -44,28 +62,18 @@
         </label>
         
         
-        <div class="form-group" style="padding-top: 10px;">
-          <label>
-            <input class="form-control" name="hmin" min=1 onchange="document.getElementById('hmax').min = this.value;" placeholder="Minimum Hours" id="hmin" type="number">
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            <input class="form-control" name="hmax" max = 4096 onchange="document.getElementById('hmin').max = this.value;" placeholder="Maximum Hours" id="hmax" type="number">
-          </label>
-        </div>
-        <div class="form-group">
-          <label>
-            <input class="form-control" min=2 max=10 name="cmax" placeholder="Max Collaborators (2-10)" id="cmax" type="number">
-          </label> 
-        </div>
+        
         <div class="mb-3">
-          <label for="formFile" class="form-label">Task Image</label>
+          <label for="formFile" class="form-label">Image</label>
           <input class="form-control" type="file" id="image" name= "image">
         </div>
-        <button class="btn btn-primary" type="submit">Create Task</button>
+        <div class = "center-button">
+          <button class="btn btn-primary submit-button" type="submit">Create Task</button>
+        </div>
     </form>
      </div>
+   </div>
+     
      <script type="text/javascript" src="/static/languages.js"></script>
      <script src="/static/validation.js"></script>
      
