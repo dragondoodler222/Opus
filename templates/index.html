@@ -11,14 +11,16 @@
 
 
 {% block main %}
-	<div class="task">
-		<span class="task-points">500 pts</span>
-		<span class="task-name">Python Project for Charity</span>
-		<span class="task-creator">by jonah</span>
-		<span class="task-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nibh sem, tristique sit amet nisi eu, venenatis dapibus urna. Vivamus molestie iaculis sem in scelerisque. Mauris tempus rhoncus mauris. In hac habitasse platea dictumst. Nulla vitae tellus sed nulla tincidunt consectetur. Nulla sed sem in eros aliquet consequat. Phasellus condimentum nisl at ipsum consectetur venenatis. Aliquam lorem odio, sagittis ut lectus nec, maximus pretium arcu. Donec molestie vulputate congue. Aenean id purus mollis, dictum ex et, eleifend eros. Proin lacinia tristique nibh, in dapibus lacus sagittis gravida. Praesent aliquam tincidunt tempus.</span>
-		<div class="task-stats">
-			<span class="task-time">4-5 hours</span>
-			<span class="task-collaborator-count">2/3 collaborators</span>
+	{% for task in tasks %}
+		<div class="task">
+			<span class="task-points">{{ task["points"] }} pts</span>
+			<span class="task-name">{{ task["title"] }}</span>
+			<span class="task-creator">by {{ task["creator"] }}</span>
+			<span class="task-desc">{{ task["description"] }}</span>
+			<div class="task-stats">
+				<span class="task-time">{{ task["hrs-min"] }}-{{ task["hrs-max"] }} hours</span>
+				<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["collaborators-max"] }} collaborators</span>
+			</div>
 		</div>
-	</div>
+	{% endfor %}
 {% endblock %}
