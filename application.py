@@ -135,8 +135,6 @@ def notifications():
                 "task-name" : the_task['title'],
                 "task-id" : the_task['id']
                 })
-            if len(othersNotifications) > 11:
-                othersNotifications = othersNotifications[:11]
             db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=person['id'], c=tobinary(othersNotifications))
 
 
@@ -144,7 +142,11 @@ def notifications():
     else:
         user=getuser(session, db)
         tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
-
+        newnotifications = []
+        for noti in notifications:
+            if noti['format'] == 'join-prompt':
+                newnotifications.append(noti)
+        db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=session['user_id'], c=tobinary(newnotifications))
         return render_template("notifications.html",db=db,notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
