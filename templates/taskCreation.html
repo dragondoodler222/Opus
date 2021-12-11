@@ -5,7 +5,7 @@
 {% endblock %}
 {%block head%}
 <head>
-	<link rel="stylesheet" href="/static/taskCreation.css">
+  <link rel="stylesheet" href="/static/taskCreation.css">
   
 
 
@@ -18,9 +18,11 @@
      <!-- This was basically the template I was thinking for all the stuff yeah-->
      <div class = "wrap">
       <h2>Task Creation</h2>
-     	<form id = "taskform" action="/createTask" method="post">
+      <form id = "taskform" action="/createTask" method="post">
         <div class="form-group">
+          <label>
             <input autocomplete="off" autofocus class="form-control" name="title" id = "title" placeholder="Name" type="text">
+          </label>            
         </div>
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" id = "description" type="text"></textarea>
@@ -28,27 +30,34 @@
         <!-- <div class="form-group">
             <input class="form-control" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
         </div> -->
-        <div class = "lang-container">
-          <div class = "form-group input-container">
-            <div class = "title">
-              <h4>Languages Needed</h4>
-              <p>Add a comma after each language</p>
-            </div>
-            <input class="form-control" id = "languages" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
-            <div class = "language-container">
-              
+        <label>
+          <div class = "lang-container">
+            <div class = "form-group input-container">
+              <div class = "title">
+                <h4>Languages Needed</h4>
+                <p>Add a comma after each language</p>
+              </div>
+              <input class="form-control" id = "languages" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
+              <div class = "language-container" id = "langtags"></div>
             </div>
           </div>
-        </div>
+        </label>
+        
         
         <div class="form-group" style="padding-top: 10px;">
+          <label>
             <input class="form-control" name="hmin" placeholder="Minimum Hours" id="hmin" type="number">
+          </label>
         </div>
         <div class="form-group">
+          <label>
             <input class="form-control" name="hmax" placeholder="Maximum Hours" id="hmax" type="number">
+          </label>
         </div>
         <div class="form-group">
+          <label>
             <input class="form-control" name="cmax" placeholder="Max Collaborators" id="cmax" type="number">
+          </label> 
         </div>
         <div class="mb-3">
           <label for="formFile" class="form-label">Task Image</label>

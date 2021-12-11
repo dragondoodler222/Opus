@@ -1,7 +1,3 @@
-"use strict";
-
-
-
 window.addEventListener('DOMContentLoaded',function(){
     let formEl = document.getElementById('taskform');
     formEl.addEventListener('submit', function(ev){
@@ -12,6 +8,11 @@ window.addEventListener('DOMContentLoaded',function(){
         let hmaxInput = document.getElementById('hmax');
         let cmaxInput = document.getElementById('cmax');
         let imageInput = document.getElementById('image');
+        let container = document.getElementsById("langtags");
+        let spans = container.getElementsByTagName("span");
+        console.log(spans)
+        console.log(container)
+        console.log(spans.length)
         if (titleInput.value == "") {
             titleInput.classList.add('error');
             titleInput.parentNode.classList.add('error');
@@ -21,14 +22,14 @@ window.addEventListener('DOMContentLoaded',function(){
             titleInput.classList.remove('error');
             titleInput.parentNode.classList.remove('error');
         }
-        if (languagesInput.value == "") {
-            languagesInput.classList.add('error');
-            languagesInput.parentNode.classList.add('error');
+        if (spans.length == 0) {
+            languagesInput.parentNode.parentNode.classList.add('error');
+            languagesInput.parentNode.parentNode.parentNode.classList.add('error');
             ev.preventDefault();
         } else {
             /* clear error classes and let submit happen */
-            languagesInput.classList.remove('error');
-            languagesInput.parentNode.classList.remove('error');
+            languagesInput.parentNode.parentNode.classList.remove('error');
+            languagesInput.parentNode.parentNode.parentNode.classList.remove('error');
         }
         if (hmaxInput.value == "") {
             hmaxInput.classList.add('error');
@@ -59,4 +60,4 @@ window.addEventListener('DOMContentLoaded',function(){
         }
 
     });
-});
+}); 
