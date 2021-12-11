@@ -28,8 +28,10 @@ def debyte(obj):
 def getuser(session, db):
     user =  db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]
     
-    user["level"]=int(user['points']**.5//10)
-    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+    user["level"]=int(user['points']**.5//8)
+    user["level-progress"] = (user['points']**.5/8-user["level"])*100
+    
+
     user["notifications"] = debyte(user["notifications"]) if user["notifications"] else []
     user["notification-amount"] = len(user["notifications"])
 
@@ -38,16 +40,16 @@ def getuser(session, db):
 def get_user_from_name(name, db):
     user =  db.execute("SELECT * FROM users WHERE username = :name", name=name)[0]
     
-    user["level"]=int(user['points']**.5//10)
-    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+    user["level"]=int(user['points']**.5//8)
+    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*8)**2)
 
     return user
 
 def get_user_from_id(id, db):
     user =  db.execute("SELECT * FROM users WHERE id = :id", id=id)[0]
     
-    user["level"]=int(user['points']**.5//10)
-    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+    user["level"]=int(user['points']**.5//8)
+    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*8)**2)
 
     return user
 
