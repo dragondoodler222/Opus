@@ -25,3 +25,5 @@ def tobinary(obj):
 def debyte(obj):
     return pickle.loads(obj)
 
+def getuser(session, db):
+    return db.execute("SELECT 1 FROM users WHERE id = :id", id=session["user_id"])[0]
