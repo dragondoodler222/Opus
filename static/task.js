@@ -57,7 +57,7 @@ $(document).ready(function () {
 	$("#sendmsg").submit(function (e) {
 		$.ajax({
 			type: "POST",
-			url: "/createPost/",
+			url: "/createPost",
 			data: $('#sendmsg').serialize(),
 			success: function(response) {
                 console.log(response);
