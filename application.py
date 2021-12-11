@@ -107,27 +107,29 @@ def logout():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    error = None
     if request.method == "POST":
         if not request.form.get("username"):
-            return None # TODO - error handler
+            error = "Error: Invalid Username"
 
         elif not request.form.get("password"):
-            return None # TODO - error handler
+            error = "Error: Invalid Password"
 
         elif not request.form.get("password") == request.form.get("confirm-password"):
-            return None # TODO - error handler
+            error = "Error: Passwords do not match"
 
         elif len(db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))) != 0:
-            return None # TODO - error handler
+            error = "Error: Username is already taken"
+        else:
+            db.execute("INSERT INTO users (id, username, hash) VALUES (?, ?, ?)", db.execute("SELECT count(*) FROM users")[0]['count(*)'] + 1, request.form.get("username"), generate_password_hash(request.form.get("password")))
 
-        db.execute("INSERT INTO users (id, username, hash) VALUES (?, ?, ?)", db.execute("SELECT count(*) FROM users")[0]['count(*)'] + 1, request.form.get("username"), generate_password_hash(request.form.get("password")))
+            session["user_id"] = db.execute("SELECT count(*) FROM users")[0]['count(*)']
 
-        session["user_id"] = db.execute("SELECT count(*) FROM users")[0]['count(*)']
+            return redirect("/")
 
-        return redirect("/")
+    if error is not None: flash(error)
 
-    else:
-        return render_template("register.html")
+    return render_template("register.html")
 
 
 def errorhandler(e):
