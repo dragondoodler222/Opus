@@ -96,13 +96,18 @@ fill: none;
 .notification-circle {
   content: "";
   position: absolute;
-  top: 20%;
-  right: 20%;
-  width: 10px;
-  height: 10px;
+  top: 10%;
+  right: 10%;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   background: #EC255A;
+  font-size: 9px;
+  justify-content: center;
+  align-items: center;
+  color: white;
 }
+
 
 .alert {
   background: #ff759d;

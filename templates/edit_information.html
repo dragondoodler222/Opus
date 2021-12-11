@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Edit Information
+{% endblock %}
+
+
+{% block head %}
+    <link href="/static/profile.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block mainnocont %}
+	<div class="profile-outer">
+		<div class = "name-section">
+		 	<div style="display: flex; align-items: center;">
+				<div style = "margin-left: 12px;">
+					<svg viewBox="0 0 36 36" class="level-display-outer">
+						<path class="level-display-bg"
+			        d="M18 2.0845
+			          a 15.9155 15.9155 0 0 1 0 31.831
+			          a 15.9155 15.9155 0 0 1 0 -31.831"
+			      />
+					  <path class = "level-display"
+					    d="M18 2.0845
+					      a 15.9155 15.9155 0 0 1 0 31.831
+					      a 15.9155 15.9155 0 0 1 0 -31.831"
+					    fill="none"
+					    stroke="#444";
+					    stroke-width="1";
+					    stroke-dasharray="{{ user["level-progress"] }}, 100";
+					  />
+					  <text x="18" y="22.8" class="level">{{user["level"]}}</text>
+					</svg>
+				</div>
+				<h1 class="profile-username">{{user["username"]}}</h1>
+			</div>
+			<div class = "tasks-completed">
+				<span>{{ user["numcomplete"] }}</span>
+				<div>Tasks Completed</div>
+			</div>
+			<div class = "point-count">
+				<span>{{ user["points"] }}</span>
+				<div>Points</div>
+			</div>
+			<div class = "active-tasks">
+				<span>{{ task_count }}</span>
+				<div>Active Tasks</div>
+			</div>
+		</div>
+
+		<div class = "information">
+			<h2>Edit Information: </h2>
+				<form id = "taskform" action="/editinfo" method="post">
+	        <div class="form-group">
+	          <label>
+	          	Email Address: <input autocomplete="off" autofocus class="form-control" name="email" id = "email" placeholder="{{email}}" type="email">
+	          </label>
+	        </div>
+	        <button class="btn btn-primary" type="submit">Save Information</button>
+	    </form>
+			
+		</div>
+	</div>
+	
+{% endblock %}
