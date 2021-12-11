@@ -12,22 +12,26 @@
 
 {% block mainnocont %}
 	<div class="active-task-wrapper">
-		<h1>Your Active Tasks ({{len(active_tasks)}})</h1>
-		<div class="active-task-grid">
-			{% for task in active_tasks %}
-					<a class = "div-link" href="/task/{{task.id}}">
-						<div class="atask">
-							<span class="task-name">{{ task["title"] }}</span>
-							<span class="task-creator">{{ task["creator"] }}</span>
-							<span class="task-desc">{{ task["description"] }}</span>
-							<div class="task-stats">
-								<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
-								<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["cmax"] }} collaborators</span>
+		{% if active_tasks != [] %}
+			<h1>Your Active Tasks ({{len(active_tasks)}})</h1>
+			<div class="active-task-grid">
+				{% for task in active_tasks %}
+						<a class = "div-link" href="/task/{{task.id}}">
+							<div class="atask">
+								<span class="task-name">{{ task["title"] }}</span>
+								<span class="task-creator">{{ task["creator"] }}</span>
+								<span class="task-desc">{{ task["description"] }}</span>
+								<div class="task-stats">
+									<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
+									<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["cmax"] }} collaborators</span>
+								</div>
 							</div>
-						</div>
-					</a>
-			{% endfor %}
-		</div>
+						</a>
+				{% endfor %}
+			</div>
+		{% else %}
+			<h2>You don't have any tasks yet, try joining or making some.</h2>
+		{% endif %}
 	</div>
 {% endblock %}
 {% block main %}
