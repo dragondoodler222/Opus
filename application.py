@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import calculate_points, login_required, getuser, get_user_from_name, tobinary, debyte
+from helpers import get_user_from_id,calculate_points, login_required, getuser, get_user_from_name, tobinary, debyte
 
 # Configure application
 app = Flask(__name__)
@@ -41,13 +41,21 @@ def index():
     alltasks = db.execute("SELECT * FROM tasks")
 
     tasks = []
+    other_tasks = []
     for task in alltasks:
+        lst = None
         if (task['creator'] == session['user_id'] or session['user_id'] in debyte(task['collaborators'])):
-            task['creator'] = session["user_name"]
-            task["collaborators-count"] = len(debyte(task['collaborators']))
-            task["points"] = calculate_points(task)
-            tasks.append(task)
-    return render_template("index.html",tasks = tasks,user=getuser(session, db))
+            lst = tasks
+        else:
+            lst = other_tasks
+        creator = get_user_from_id(task['creator'],db)
+        task['creator'] = creator["username"]
+        task["collaborators-count"] = len(debyte(task['collaborators']))
+        task["points"] = calculate_points(task)
+        
+        if not (lst == other_tasks and (task["collaborators-count"] == task["cmax"])):
+            lst.append(task)
+    return render_template("index.html",len=len,active_tasks = tasks,tasks = other_tasks,user=getuser(session, db))
 
 
 @app.route("/profile/<username>")
@@ -59,7 +67,7 @@ def profile(username):
     else:
         other_user = user
     alltasks = db.execute("SELECT * FROM tasks")
-
+    other_tasks = []
     tasks = []
     for task in alltasks:
         if (task['creator'] == other_user['id'] or other_user['id'] in debyte(task['collaborators'])):

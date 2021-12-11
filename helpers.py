@@ -41,6 +41,14 @@ def get_user_from_name(name, db):
 
     return user
 
+def get_user_from_id(id, db):
+    user =  db.execute("SELECT * FROM users WHERE id = :id", id=id)[0]
+    
+    user["level"]=int(user['points']**.5//10)
+    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+
+    return user
+
 def calculate_points(task):
     return 500
 
