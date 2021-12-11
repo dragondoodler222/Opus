@@ -252,7 +252,7 @@ def createTask():
 @app.route("/task/<id>", methods=["GET", "POST"])
 @login_required
 def task(id):
-    if request.method == "GET"
+    if request.method == "GET":
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
         ids = debyte(task['collaborators'])
