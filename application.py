@@ -27,7 +27,11 @@ def after_request(response):
 #app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
+<<<<<<< Updated upstream
 app.config["SESSION_FILE_DIR"] = mkdtemp() 
+=======
+app.config["SESSION_FILE_DIR"] = mkdtemp()  
+>>>>>>> Stashed changes
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -169,7 +173,9 @@ def createTask():
 def task(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
     creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
-    return render_template("task.html", task=task, creator=creator)
+    print(task)
+    print(creator)
+    return render_template("task.html", task=task, creator=creator, user=getuser(session, db))
 
 def errorhandler(e):
     """Handle error"""
