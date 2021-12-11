@@ -19,7 +19,7 @@
     </tr> -->
     {% set i = 0 %}
     {% for notification in notifications %}
-    {% set task = db.execute("SELECT * FROM tasks WHERE id = :id", id=notification['task-id']) %}
+    {% set task = db.execute("SELECT * FROM tasks WHERE id = :id", id=notification['task-id'])[0] %}
     <tr>
       {% if notification["format"] == "join-prompt"%}
         <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{task['title']}}</a></td>
