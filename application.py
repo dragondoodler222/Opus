@@ -353,7 +353,10 @@ def task(id):
             db.execute("UPDATE tasks SET collaborators = :p WHERE id = :id", id=id, p=tobinary(task['collaborators']))
             return redirect("/task/" + id)
 
-
+@app.route("/createPost")
+@login_required
+def createpost():
+    print("WHATTHEFUCK")
 
 def errorhandler(e):
     """Handle error"""

@@ -55,13 +55,8 @@ document.getElementsByClassName("modal2")[0].onclick = function(event) {
 
 $(document).ready(function () {
 	$("#sendmsg").submit(function (e) {
-		$.ajax({
-			type: "POST",
-			url: "/createPost",
-			data: $('#sendmsg').serialize(),
-			success: function(response) {
-                console.log(response);
-            } 
-		})
+		$.post("/createPost",{data: $('#sendmsg').serialize()},() => window.location.reload());
 	});
 });
+
+
