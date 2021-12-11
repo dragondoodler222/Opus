@@ -16,7 +16,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
-        <title>Banana: {% block title %}{% endblock %}</title>
+        <title>HtB App: {% block title %}{% endblock %}</title>
     
     </head>
 
@@ -35,12 +35,21 @@
                         <li class="nav-item"><a class="nav-link" href="/history">History</a></li>
                     </ul> -->
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                        <li class="nav-item">
+                            <div id="user-information-dropdown">
+                              <button onclick="showUserDropdown()" id="user-information-dropname" class="nav-link">{{ session.user_name }} <span class="dropdown-caret"></span></button>
+                              <div id="user-information-dropdown-content">
+                                <a class="nav-link" href="/profile">Profile</a>
+                                <span class="sep"></span>
+                                <a class="nav-link" href="/logout">Logout</a>
+                              </div>
+                            </div>
+                        </li>
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/register">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link  btn btn-primary" style = "color:white;margin-left:10px;" href="/register">Sign Up</a></li>
                     </ul>
                 {% endif %}
             </div>
@@ -62,7 +71,7 @@
         <footer>
             <!-- Do we wwant a footer?-->
         </footer>
-
+        <script src="static/scripts.js"></script>
     </body>
 
 </html>
