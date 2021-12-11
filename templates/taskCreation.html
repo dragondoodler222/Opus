@@ -3,43 +3,58 @@
 {% block title %}
     Task Creation
 {% endblock %}
-{% block styles %}
-
-<link rel="stylesheet" href="../static/css/taskCreation.css">
-
+{%block head%}
+<head>
+	<link rel="stylesheet" href="/static/taskCreation.css">
+</head>
 {% endblock %}
 
 {% block main %}
      <!-- This was basically the template I was thinking for all the stuff yeah-->
-     <form action="/login" method="post">
+     <div class = "wrap">
+     	<form action="/createTask" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="taskName" placeholder="Name" type="text">
         </div>
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" type="text"></textarea>
         </div>
-        <div class = "wrapper">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="languages" placeholder="Languages Needed" type="text">
+        </div>
+        <!-- <div class = "wrapper">
         	<div class = "title">
-        		<h4>Languages Needed</h4>
+        		<h2>Languages Needed</h2>
         	</div>
         	<div class = "content">
         		<p>Press enter or add a comma after each language</p>
-        		<div class = "tag-box">
-        			<ul>
-        				<li>
-        					html <i class="uit uit-multiply"></i>
-        				</li>
-        			</ul>
-        		</div>
+        		
+      			<ul>
+      				<li>
+      					html <i class="uit uit-multiply">X</i>
+      				</li>
+      			</ul>
         	</div>
         	<div class = "details">
         		<button>Remove All</button>
         	</div>
+        </div> -->
+        
+        <div class="form-group">
+            <input class="form-control" name="minHours" placeholder="Minimum Hours" type="number"></input>
         </div>
         <div class="form-group">
-            <input class="form-control" name="languages" placeholder="Languages Needed" type="text">
+            <input class="form-control" name="maxHours" placeholder="Maximum Hours" type="number"></input>
         </div>
-
-        <button class="btn btn-primary" type="submit">Log In</button>
+        <div class="form-group">
+            <input class="form-control" name="maxHours" placeholder="Max Collaborators" type="number"></input>
+        </div>
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Task Image</label>
+          <input class="form-control" type="file" id="taskImage">
+        </div>
+        <button class="btn btn-primary" type="submit">Create Task</button>
     </form>
+     </div>
+     
 {% endblock %}
