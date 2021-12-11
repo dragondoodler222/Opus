@@ -1,6 +1,7 @@
 //https://codepen.io/barman47/pen/gOwypmj
 const langInput = document.querySelector("#languages");
 const form = document.querySelector("#taskform");
+const hiddenInput = document.getElementById("hiddenInput");
 
 const langContainer = document.querySelector(".language-container");
 const langs = [];
@@ -14,7 +15,12 @@ const createTag = (tagValue) => {
     const tagContent = document.createTextNode(value);
     tag.setAttribute('class', 'tag');
     tag.appendChild(tagContent);
-
+    if (hiddenInput.value == ""){
+       hiddenInput.value += value; 
+   }else{
+    hiddenInput.value += ", " + value;
+   }
+    
     const close = document.createElement('span');
     close.setAttribute('class', 'remove-tag');
     close.innerHTML = '&#10006;'

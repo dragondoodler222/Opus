@@ -11,6 +11,7 @@ window.addEventListener('DOMContentLoaded',function(){
         let imageInput = document.getElementById('image');
         let container = document.getElementById("langtags");
         let spans = container.getElementsByTagName("span");
+        let hiddenInput = document.getElementById("hiddenInput");
         console.log(spans)
         console.log(container)
         console.log(spans.length)
@@ -63,6 +64,7 @@ window.addEventListener('DOMContentLoaded',function(){
         if (rv == false){
             ev.preventDefault();
         }
+        hiddenInput.value += ", " + languagesInput.value;
 
     });
 }); 

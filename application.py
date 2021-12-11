@@ -268,7 +268,7 @@ def taskCreation():
 @app.route("/createTask", methods=["POST"])
 def createTask():
     task = request.form.to_dict()
-    db.execute("INSERT INTO tasks (id, title, description, languages, image, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['image'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
+    db.execute("INSERT INTO tasks (id, title, description, languages, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
     return redirect("/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
 
 @app.route("/task/<id>", methods=["GET", "POST"])
