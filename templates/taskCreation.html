@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Task Creation
+{% endblock %}
+
+{% block main %}
+     <!-- This was basically the template I was thinking for all the stuff yeah-->
+     <form action="/login" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="taskName" placeholder="Name" type="text">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" name="description" placeholder="Description" type="text"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+{% endblock %}
