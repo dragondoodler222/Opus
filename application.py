@@ -310,7 +310,7 @@ def task(id):
             for collaborator in collaborators:
                 person = db.execute("SELECT * FROM users WHERE id = :id", id=collaborator)[0]
                 person['points'] += points
-                person['notifications'] = debyte(person['notifications'])
+                person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
                 person['notifications'].insert(0, {
                     "format" : "complete",
                     "task-id" : task['id'],
@@ -322,7 +322,7 @@ def task(id):
             return redirect("/")
         elif request.form['request_type'] == 'join': 
             person = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
-            person['notifications'] = debyte(person['notifications'])
+            person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
             person['notifications'].insert(0, {
                 "user" : db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]['username'],
                 "format" : "join-prompt",
