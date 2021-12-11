@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, getuser
+from helpers import login_required, getuser, get_user_from_name
 
 # Configure application
 app = Flask(__name__)
@@ -45,18 +45,23 @@ def index():
 @app.route("/profile/<username>")
 @login_required
 def profile(username):
-    user=getuser(session, db)
-    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
+    user = getuser(session, db)
+    if user["username"] != username:
+        other_user = get_user_from_name(username, db)
+    else:
+        other_user = user
+    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=other_user["id"])
 
-    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+    
+    return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
-app.route("/notifications")
+@app.route("/notifications")
 @login_required
 def notifications():
     user=getuser(session, db)
     tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
-    
-    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+
+    return render_template("notifications.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])
