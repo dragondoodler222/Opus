@@ -4,14 +4,28 @@
     Log In
 {% endblock %}
 
+{% block head %}
+<link href="/static/login.css" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+{% endblock %}
+
 {% block main %}
-    <form action="/login" method="post">
-        <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+    <div class = "wrapper">
+        <div>
+            <h1>Log in</h1>
+            <p>Sign in and start creating tasks!</p>
         </div>
-        <div class="form-group">
-            <input class="form-control" name="password" placeholder="Password" type="password">
-        </div>
-        <button class="btn btn-primary" type="submit">Log In</button>
-    </form>
+        
+        <form action="/login" method="post">
+            <div class="form-group input-area">
+                <input autocomplete="off" autofocus class="form-control" name="username" placeholder="&#xf007; Username" type="text" style="font-family:Arial, FontAwesome">
+            </div>
+            <div class="form-group input-area">
+                <input class="form-control" name="password" placeholder="&#xf023; Password" type="password" style="font-family:Arial, FontAwesome">
+            </div>
+            <button class="btn btn-primary submit-button" type="submit">Log In</button>
+        </form>
+    </div>
+
 {% endblock %}
