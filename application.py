@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import calculate_points, login_required, getuser, get_user_from_name, tobinary, debyte
+from helpers import get_user_from_id,calculate_points, login_required, getuser, get_user_from_name, tobinary, debyte
 
 # Configure application
 app = Flask(__name__)
@@ -41,13 +41,21 @@ def index():
     alltasks = db.execute("SELECT * FROM tasks")
 
     tasks = []
+    other_tasks = []
     for task in alltasks:
+        lst = None
         if (task['creator'] == session['user_id'] or session['user_id'] in debyte(task['collaborators'])):
-            task['creator'] = session["user_name"]
-            task["collaborators-count"] = len(debyte(task['collaborators']))
-            task["points"] = calculate_points(task)
-            tasks.append(task)
-    return render_template("index.html",tasks = tasks,user=getuser(session, db))
+            lst = tasks
+        else:
+            lst = other_tasks
+        creator = get_user_from_id(task['creator'],db)
+        task['creator'] = creator["username"]
+        task["collaborators-count"] = len(debyte(task['collaborators']))
+        task["points"] = calculate_points(task)
+        
+        if not (lst == other_tasks and (task["collaborators-count"] == task["cmax"])):
+            lst.append(task)
+    return render_template("index.html",len=len,active_tasks = tasks,tasks = other_tasks,user=getuser(session, db))
 
 
 @app.route("/profile/<username>")
@@ -59,7 +67,7 @@ def profile(username):
     else:
         other_user = user
     alltasks = db.execute("SELECT * FROM tasks")
-
+    other_tasks = []
     tasks = []
     for task in alltasks:
         if (task['creator'] == other_user['id'] or other_user['id'] in debyte(task['collaborators'])):
@@ -77,31 +85,43 @@ def notifications():
         {
             "format" : "join-prompt",
             "user" : "dashiell",
-            "task-name" : "Python Projects (Very Charitable)"
+            "task-id" : 1
         },
         {
             "format" : "accept-notification",
-            "task-name" : "Scheme Project :)"
+            "task-name" : "Scheme Project :)",
+            "task-id" : 2
         },
         {
             "format" : "reject-notification",
-            "task-name" : "Ada Project :("
+            "task-name" : "Ada Project :(",
+            "task-id" : 3
         }
     ]
+    notifications = db.execute("SELECT * FROM users WHERE id = :id", id=session['user_id'])[0]['notifications']
+    if notifications:
+        notifications = debyte(notifications)
+    else:
+        notifications = []
 
     if request.method == "POST":
         if request.form["request_type"] == "Accept":
-            pass
-            # MAKE THEM JOIN THE TASK
+            data = debyte(db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['identifier'])[0]['collaborators'])
+            if data is None: data = []
+            person = db.execute("SELECT * FROM users WHERE username = :user", user=request.form['user'])[0]
+            if not (person['id'] in data):
+                data.append(person['id'])
+            db.execute("UPDATE tasks SET collaborators = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(data))
         else:
             pass
-            # MAKE THEM JOIN THE TASK
-        return ""
+        notifications.pop(int(request.form['i']))
+        db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(notifications))
+        return redirect("/notifications")
     else:
         user=getuser(session, db)
         tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
 
-        return render_template("notifications.html",notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+        return render_template("notifications.html",db=db,notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])

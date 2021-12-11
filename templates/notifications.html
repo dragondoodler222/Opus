@@ -12,27 +12,34 @@
 
 {% block main %}
   <table>
-    <!-- tr>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Points</th>
-    </tr> -->
-    {% for notification in notifications %}
-    <tr>
-      {% if notification["format"] == "join-prompt"%}
-        <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{notification["task-name"]}}</a></td>
-        <td class="acceptreject">
-          <button onclick = "postData(1)" class="btn btn-primary accept-button">Accept</button>
-          <button onclick = "postData(-1)" class="btn btn-primary reject-button">Reject</button>
-        </td>
-      {% elif notification["format"] == "accept-notification"%}
-        <td>You have been accepted for <a>{{notification["task-name"]}}</a></td>
-         <td></td>
-      {% elif notification["format"] == "reject-notification"%}
-        <td>You have been rejected from <a>{{notification["task-name"]}}</a></td><td></td>
-      {% endif %}
-    </tr>
-     {% endfor %}
+    {% if notifications %}
+      {% set i = 0 %}
+      {% for notification in notifications %}
+      {% set task = db.execute("SELECT * FROM tasks WHERE id = :id", id=notification['task-id'])[0] %}
+      <tr>
+        {% if notification["format"] == "join-prompt"%}
+          <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{task['title']}}</a></td>
+          <td class="acceptreject">
+            <button onclick = "postData(1,{{task['id']}}, {{'\"'+notification['user']+'\"'}}, {{i}})" class="btn btn-primary accept-button">Accept</button>
+            <button onclick = "postData(-1, {{task['id']}}, {{'\"'+notification['user']+'\"'}}, {{i}})" class="btn btn-primary reject-button">Reject</button>
+          </td>
+        {% elif notification["format"] == "accept-notification"%}
+          <td>You have been accepted for <a>{{task['title']}}</a></td>
+           <td></td>
+        {% elif notification["format"] == "reject-notification"%}
+          <td>You have been rejected from <a>{{task['title']}}</a></td><td></td>
+        {% endif %}
+      </tr>
+       {% set i = i + 1 %}
+       {% endfor %}
+
+     {% else %}
+       <tr>
+        <td style="background:#f2f2f2;">You don't have any notifications, check again later...</td>
+       </tr>
+     {% endif %}
+    
   </table>
+
   <script src="/static/notifications.js"></script>
 {% endblock %}
