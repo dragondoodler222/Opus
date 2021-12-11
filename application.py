@@ -54,7 +54,7 @@ def profile(username):
 
     tasks = []
     for task in alltasks:
-        if (alltasks['creator'] = other_user['id'] or other_user['id'] in debyte(alltasks['collaborators'])):
+        if (alltasks['creator'] == other_user['id'] or other_user['id'] in debyte(alltasks['collaborators'])):
             tasks.append(task)
     
     return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
