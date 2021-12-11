@@ -291,7 +291,15 @@ def task(id):
         task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]
         collaborators = task['collaborators']
         task["points"] = calculate_points(task)
-        return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db))
+        requestsent = False
+        for noti in debyte(creator['notifications']):
+            if noti['format'] == 'join-prompt':
+                if noti['user'] == session['user_name'] and noti['task-id'] == task['id']:
+                    requestsent = True
+        posts = db.execute("SELECT * FROM messages WHERE task = :task ORDER BY id ASC", task=id)[-6:]
+        for p in posts:
+            p["author"] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
+        return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts)
     else:
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         # four options given - delete, complete, join, leave
