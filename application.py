@@ -143,8 +143,14 @@ def register():
     return render_template("register.html")
 
 @app.route("/taskCreation")
-def createTask():
+def taskCreation():
     return render_template("taskCreation.html")
+
+@app.route("/createTask", methods=["GET", "POST"])
+def createTask():
+    #if request.method == "POST":
+        
+
 
 def errorhandler(e):
     """Handle error"""
