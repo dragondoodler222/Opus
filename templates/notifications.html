@@ -17,9 +17,22 @@
       <th>Last Name</th>
       <th>Points</th>
     </tr> -->
+    {% for notification in notifications %}
     <tr>
-      <td><a>dashiell</a> wants to join <a>Python Projects (Very Charitable)</a></td>
-      <td><button class="btn btn-primary accept-button">Accept</button><button class="btn btn-primary reject-button">Reject</button></td>
+      {% if notification["format"] == "join-prompt"%}
+        <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{notification["task-name"]}}</a></td>
+        <td class="acceptreject">
+          <button onclick = "postData(1)" class="btn btn-primary accept-button">Accept</button>
+          <button onclick = "postData(-1)" class="btn btn-primary reject-button">Reject</button>
+        </td>
+      {% elif notification["format"] == "accept-notification"%}
+        <td>You have been accepted for <a>{{notification["task-name"]}}</a></td>
+         <td></td>
+      {% elif notification["format"] == "reject-notification"%}
+        <td>You have been rejected from <a>{{notification["task-name"]}}</a></td><td></td>
+      {% endif %}
     </tr>
+     {% endfor %}
   </table>
+  <script src="/static/notifications.js"></script>
 {% endblock %}

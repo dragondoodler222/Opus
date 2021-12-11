@@ -10,14 +10,32 @@ th, td {
   padding: 16px;
 }
 
+td.acceptreject {
+  display: flex;
+  justify-content: flex-end;
+}
+
 tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
 .accept-button {
-  background: #80ED99;
+  background: #2FDD92;
+  margin-right: 20px;
+}
+.accept-button:hover {
+  background: #34BE82;
 }
 
 .reject-button {
   background: #EC255A;
 }
+.reject-button:hover {
+  background: #d11749;
+}
+
+a:hover, a:visited, a:link, a:active
+{
+    text-decoration: none;
+}
+

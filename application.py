@@ -55,13 +55,38 @@ def profile(username):
     
     return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
-@app.route("/notifications")
+@app.route("/notifications",methods=['POST', 'GET'])
 @login_required
 def notifications():
-    user=getuser(session, db)
-    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
+    notifications = [
+        {
+            "format" : "join-prompt",
+            "user" : "dashiell",
+            "task-name" : "Python Projects (Very Charitable)"
+        },
+        {
+            "format" : "accept-notification",
+            "task-name" : "Scheme Project :)"
+        },
+        {
+            "format" : "reject-notification",
+            "task-name" : "Ada Project :("
+        }
+    ]
 
-    return render_template("notifications.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+    if request.method == "POST":
+        if request.form["request_type"] == "Accept":
+            pass
+            # MAKE THEM JOIN THE TASK
+        else:
+            pass
+            # MAKE THEM JOIN THE TASK
+        return ""
+    else:
+        user=getuser(session, db)
+        tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
+
+        return render_template("notifications.html",notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])
