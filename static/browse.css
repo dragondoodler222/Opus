@@ -1,3 +1,11 @@
+.div-link:hover, .div-link:active {
+  text-decoration: none;
+  color: inherit; 
+}
+h1,h2,span {
+	color: #323232;
+}
+
 .task {
 	margin: 30px 0;
 	background: #F8F9FA;

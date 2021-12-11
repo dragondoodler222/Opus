@@ -12,15 +12,17 @@
 
 {% block main %}
 	{% for task in tasks %}
-		<div class="task">
-			<span class="task-points">{{ task["points"] }} pts</span>
-			<span class="task-name">{{ task["title"] }}</span>
-			<span class="task-creator">by {{ task["creator"] }}</span>
-			<span class="task-desc">{{ task["description"] }}</span>
-			<div class="task-stats">
-				<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
-				<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["cmax"] }} collaborators</span>
+		<a class = "div-link" href="/task/{{task.id}}">
+			<div class="task">
+				<span class="task-points">{{ task["points"] }} pts</span>
+				<span class="task-name">{{ task["title"] }}</span>
+				<span class="task-creator">by {{ task["creator"] }}</span>
+				<span class="task-desc">{{ task["description"] }}</span>
+				<div class="task-stats">
+					<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
+					<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["cmax"] }} collaborators</span>
+				</div>
 			</div>
-		</div>
+		</a>
 	{% endfor %}
 {% endblock %}

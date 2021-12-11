@@ -6,45 +6,62 @@
 
 
 {% block head %}
-    
+    <link href="/static/task.css" rel="stylesheet">
 {% endblock %}
 
 
 {% block main %}
 <table class="table">
   <tbody>
-    <tr>
+    <!-- <tr>
       <td>id: {{task.id}}</td>
+    </tr> -->
+    <tr>
+      <td class="title"><h1>{{ task.title }}</h1><span class="creator-text">by <a href="/profile/{{creator.username}}">{{creator.username}}</a></span></td><td class="pts-td"><span class="points"><span>{{task.points}}</span><div> pts</div></span></td>
+
     </tr>
     <tr>
-      <td>Title: {{task.title}}</td>
+      
     </tr>
+    {% if "description" in task %}
     <tr>
-      <td>Description: {{task.description}}</td>
+      <td colspan="2" class="description-text">{{task.description}}</td>
     </tr>
+    {% endif %}
+    
     <tr>
-      <td>Languages: {{task.languages}}</td>
-    </tr>
-    <tr>
-      <td>Minimum Hours: {{task.hmin}}</td>
-    </tr>
-    <tr>
-      <td>Maximum Hours: {{task.hmax}}</td>
-    </tr>
-    <tr>
-      <td>Max Collaborators: {{task.cmax}}</td>
-    </tr>
-    <tr>
-      <td>Collaborators: {{task.collaborators}}</td>
-    </tr>
-    <tr>
-      <td>Creator: <a href="/profile/{{creator.username}}">{{creator.username}}</a></td>
+      <td colspan="2" width="100%">
+        <div class="stats">
+        <span class="hours-text">{{task.hmin}}-{{task.hmax}} hrs</span>
+        <span class="languages-text">Languages: {{task.languages}}</span>
+        <span class="collaborators-text">Collaborators ({{len(collaborators)}}): {% for i,c in enumerate(collaborators)%}<a href="/profile/{{c['username']}}">{{c['username']}}</a>{% if i < len(collaborators)-1%}, {% endif %}{% endfor %}</span>
+        <span class="cmax-text">Max Collaborators: {{task.cmax}}</span>
+      </div>
+      </td>
+        
     </tr>
     {% if task.image %}
     <tr>
     	<td><img src = "{{task.image}}"></td>
     </tr>
     {% endif %}
+    {% if is_user_task %}
+    hi
+    {% elif is_collab_task %}
+    <tr>
+      <td colspan="2" width="100%" style="text-align: center;">
+        <button onclick = "postData('leave')" class="btn btn-primary reject-button">Leave Task</button>
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="2" width="100%" style="text-align: center;">
+        <button onclick = "postData('join')" class="btn btn-primary accept-button">Request to Join</button>
+      </td>
+    </tr>
+    {% endif %}
+    
   </tbody>
+  
 </table>
 {% endblock %}

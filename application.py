@@ -209,10 +209,11 @@ def createTask():
 def task(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
     creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
-    task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in debyte(task['collaborators'])]
-    print(task)
-    print(creator)
-    return render_template("task.html", task=task, creator=creator, user=getuser(session, db))
+    ids = debyte(task['collaborators'])
+    task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]
+    collaborators = task['collaborators']
+    task["points"] = calculate_points(task)
+    return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db))
 
 def errorhandler(e):
     """Handle error"""

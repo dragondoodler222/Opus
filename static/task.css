@@ -1,0 +1,59 @@
+.accept-button {
+  background: #2FDD92;
+  margin-right: 20px;
+}
+.accept-button:hover {
+  background: #34BE82;
+}
+
+.reject-button {
+  background: #EC255A;
+}
+.reject-button:hover {
+  background: #d11749;
+}
+
+
+h1 {
+	font-size: 35px;
+	font-weight: bold;
+}
+td.title {
+	line-height: .8;
+}
+.creator-text {
+	color: #353535;
+	font-size: 20px;
+}/*
+.hours-text, .collaborator-count {
+	color: #5B5B5B;
+	font-weight: bold;
+}*/
+.points {
+	color: #353535;
+	display: block;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+.points span {
+	color: #F037A5;
+	display: inline-block;
+	margin-right: .2em;
+}
+.points div {
+	display: inline-block;
+}
+.stats {
+	color: #353535;
+	font-weight: normal;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+.desc-text {
+	color: #5B5B5B;
+}
+
+.pts-td {
+	text-align: right;
+}
