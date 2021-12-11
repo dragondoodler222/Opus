@@ -26,4 +26,10 @@ def debyte(obj):
     return pickle.loads(obj)
 
 def getuser(session, db):
-    return db.execute("SELECT 1 FROM users WHERE id = :id", id=session["user_id"])[0]
+    user =  db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]
+    
+    user["level"]=int(user['points']**.5//10)
+    user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+
+    return user
+

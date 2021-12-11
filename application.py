@@ -47,7 +47,16 @@ def index():
 def profile(username):
     user=getuser(session, db)
     tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
-    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks),level=user['points']**.5//10, len=len)
+
+    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+
+app.route("/notifications")
+@login_required
+def notifications():
+    user=getuser(session, db)
+    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
+    
+    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])
@@ -62,40 +71,44 @@ def search():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
     """Log user in"""
 
     # Forget any user_id
     session.clear()
+
+    error = None
 
     # User reached route via POST (as by submitting a form via POST)
     if request.method == "POST":
 
         # Ensure username was submitted
         if not request.form.get("username"):
-            return None # TODO - error handler
+            error = "Error: No Username"
 
         # Ensure password was submitted
         elif not request.form.get("password"):
-            return None # TODO - error handler
+            error = "Error: No Password"
 
-        # Query database for username
-        rows = db.execute("SELECT * FROM users WHERE username = :username",
-                          username=request.form.get("username"))
+        else:
+            # Query database for username
+            rows = db.execute("SELECT * FROM users WHERE username = :username",
+                              username=request.form.get("username"))
 
-        # Ensure username exists and password is correct
-        if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
-            return None # TODO - error handler
+            # Ensure username exists and password is correct
+            if len(rows) != 1 or not check_password_hash(rows[0]["hash"], request.form.get("password")):
+                error = "Error: Invalid Username or Password"
 
-        # Remember which user has logged in
-        session["user_id"] = rows[0]["id"]
-        session["user_name"] = rows[0]["username"]
+            else:
+                # Remember which user has logged in
+                session["user_id"] = rows[0]["id"]
+                session["user_name"] = rows[0]["username"]
 
-        # Redirect user to home page
-        return redirect("/")
+                # Redirect user to home page
+                return redirect("/")
 
-    # User reached route via GET (as by clicking a link or via redirect)
-    else:
-        return render_template("login.html")
+    if error is not None: flash(error)
+    return render_template("login.html")
 
 
 @app.route("/logout")
