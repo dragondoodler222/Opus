@@ -1,4 +1,7 @@
-
+.div-link:hover, .div-link:active {
+  text-decoration: none;
+  color: inherit; 
+}
 
 
 .profile-username {

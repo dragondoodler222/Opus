@@ -53,14 +53,16 @@
 			<h2>Active Tasks</h2>
 			<div class = "a-tasks">
 				{% for task in active_tasks %}
-					<div class="task">
-						<span class="task-name">{{ task["title"] }}</span>
-						<span class="task-creator">{{ task["creator"] }}</span>
-						<div class="task-stats">
-							<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
-							<span class="task-collaborator-count">{{ len(task["collaborators"]) }}/{{ task["cmax"] }} collaborators</span>
+					<a class = "div-link" href="/task/{{task.id}}">
+						<div class="task">
+							<span class="task-name">{{ task["title"] }}</span>
+							<span class="task-creator">{{ task["creator"] }}</span>
+							<div class="task-stats">
+								<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
+								<span class="task-collaborator-count">{{ len(task["collaborators"]) }}/{{ task["cmax"] }} collaborators</span>
+							</div>
 						</div>
-					</div>
+					</a>
 				{% endfor %}
 			</div>
 		</div>

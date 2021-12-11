@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+
+{% block head %}
+    
+{% endblock %}
+
+
+{% block main %}
+<table class="table">
+  <tbody>
+    <tr>
+      <td>id: {{task.id}}</td>
+    </tr>
+    <tr>
+      <td>Title: {{task.title}}</td>
+    </tr>
+    <tr>
+      <td>Description: {{task.description}}</td>
+    </tr>
+    <tr>
+      <td>Languages: {{task.languages}}</td>
+    </tr>
+    <tr>
+      <td>Minimum Hours: {{task.hmin}}</td>
+    </tr>
+    <tr>
+      <td>Maximum Hours: {{task.hmax}}</td>
+    </tr>
+    <tr>
+      <td>Max Collaborators: {{task.cmax}}</td>
+    </tr>
+    <tr>
+      <td>Collaborators: {{task.collaborators}}</td>
+    </tr>
+    <tr>
+      <td>Creator: <a href="/profile/{{creator.username}}">{{creator.username}}</a></td>
+    </tr>
+    {% if task.image %}
+    <tr>
+    	<td><img src = "{{task.image}}"></td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}
