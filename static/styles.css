@@ -1,3 +1,28 @@
+:root {
+  --text-main: #323232;
+  --text-weak: #525252;
+
+  --foreground-1: #F8F9FA;
+
+  --foreground-2: #e5e5f7;
+
+  --foreground-3: #F5F5FF;
+
+  --border-1: #DEE2E6;
+
+  --background-1: #EDF1F2;
+
+
+  --focus-navyblue: #2D46B9;
+
+  font-size: 2vh;
+}
+
+
+
+
+
+
 #user-information-dropname {
   background: none;
   padding: 16px;

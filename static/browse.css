@@ -3,18 +3,18 @@
   color: inherit; 
 }
 h1,h2,span {
-	color: #323232;
+	color: var(--text-main);
 }
 
 h2 {
-	color: #525252;
+	color: var(--text-weak);
 	font-size: 1.5em;
 }
 
 .task, .atask{
 	margin: 30px 0;
-	background: #F8F9FA;
-	border: 1px solid #DEE2E6;
+	background: var(--foreground-1);
+	border: 1px solid var(--border-1);
 	padding: 15px;
 	display: flex;
 	flex-direction: column;
@@ -34,11 +34,11 @@ h2 {
 }
 .task-creator {
 	font-size: 20px;
-	color: #323232;
+	color: var(--text-main);
 }
 
 .task-desc {
-	color: #5B5B5B;
+	color: var(--text-weak);
 	margin: 10px 0;
 	width: 100%;
   white-space: nowrap;
@@ -47,11 +47,11 @@ h2 {
 }
 
 .task-points, .task-time, .task-collaborator-count {
-	color: #5B5B5B;
+	color: var(--text-weak);
 	font-weight: bold;
 }
 .task-points {
-	color: #353535;
+	color: var(--text-main);
 }
 .task-stats {
 	display: flex;
@@ -90,7 +90,7 @@ h2 {
 
 
 body {
-	background: #EDF1F2;
+	background: var(--background-1);
 }
 
 

@@ -9,6 +9,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from helpers import get_user_from_id,calculate_points, login_required, getuser, get_user_from_name, tobinary, debyte
 
+import random
+
 # Configure application
 app = Flask(__name__)
 
@@ -60,6 +62,8 @@ def index():
                 lst.append(task)
         else:
             lst.append(task)
+
+    random.shuffle(other_tasks)
     return render_template("index.html",len=len,active_tasks = tasks,tasks = other_tasks,user=getuser(session, db))
 
 
