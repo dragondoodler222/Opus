@@ -16,16 +16,14 @@ openDeleteConfirmModal = () => {
 };
 
 function deleteTask() {
-	$.post("",{request_type: "delete"},() => window.location.reload());
+	$.post("",{request_type: "delete"},() => window.location = '/');
 	modal.style.display = "none";
-	window.location = '/';
 }
 
 function completeTask() {
 	//POST HERE
-	$.post("",{request_type: "complete"},() => window.location.reload());
+	$.post("",{request_type: "complete"},() => window.location = '/');
 	modal2.style.display = "none";
-	window.location = '/';
 }
 
 // When the user clicks on <span> (x), close the modal
