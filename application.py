@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required, getuser, get_user_from_name
+from helpers import login_required, getuser, get_user_from_name, tobinary, debyte
 
 # Configure application
 app = Flask(__name__)
@@ -154,14 +154,22 @@ def register():
     return render_template("register.html",user=getuser(session, db))
 
 @app.route("/taskCreation")
+@login_required
 def taskCreation():
     return render_template("taskCreation.html",user=getuser(session, db))
 
-@app.route("/createTask", methods=["GET", "POST"])
+@app.route("/createTask", methods=["POST"])
 def createTask():
-    return redirect("/task")
-    #if request.method == "POST":
-        
+    task = request.form.to_dict()
+    db.execute("INSERT INTO tasks (id, title, description, languages, image, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['image'], tasks['hmin'], tasks['hmax'], tasks['cmax'], tobinary([session['user_id']]), session['user_id'])
+    return redirect("/task/" + str(task['id']))
+
+@app.route("/task/<id>")
+@login_required
+def task(id):
+    task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+    creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
+    return render_template("task.html", task=task, creator=creator)
 
 def errorhandler(e):
     """Handle error"""
