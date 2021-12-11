@@ -170,11 +170,12 @@ def edit_information():
             task["collaborators-count"] = len(debyte(task['collaborators']))
             task["points"] = calculate_points(task)
             tasks.append(task)
-    email = 'youremail@domain.com'
+    email = user["email"]
         
     if request.method == "POST":
         to_save = request.form.to_dict()
-        # SAVE to_save['email']
+        db.execute("UPDATE users SET email = :email WHERE id = :id", email=email, id=user["id"])
+        
     return render_template("edit_information.html",user=user,email=email,task_count=len(tasks))
 
 @app.route("/login", methods=["GET", "POST"])
