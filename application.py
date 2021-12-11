@@ -54,7 +54,7 @@ def profile(username):
 
     tasks = []
     for task in alltasks:
-        if (alltasks['creator'] == other_user['id'] or other_user['id'] in debyte(alltasks['collaborators'])):
+        if (task['creator'] == other_user['id'] or other_user['id'] in debyte(task['collaborators'])):
             tasks.append(task)
     
     return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
@@ -190,8 +190,8 @@ def taskCreation():
 @app.route("/createTask", methods=["POST"])
 def createTask():
     task = request.form.to_dict()
-    db.execute("INSERT INTO tasks (id, title, description, languages, image, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['image'], tasks['hmin'], tasks['hmax'], tasks['cmax'], tobinary([session['user_id']]), session['user_id'])
-    return redirect("/task/" + str(task['id']))
+    db.execute("INSERT INTO tasks (id, title, description, languages, image, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['image'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
+    return redirect("/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
 
 @app.route("/task/<id>")
 @login_required

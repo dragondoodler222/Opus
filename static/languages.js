@@ -45,7 +45,7 @@ langInput.addEventListener('keyup', (e) => {
     }
 });
 
-form.addEventListener('submit', handleFormSubmit);
+//form.addEventListener('submit', handleFormSubmit);
 
 
 
