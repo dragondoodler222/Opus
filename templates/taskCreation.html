@@ -14,13 +14,13 @@
      <div class = "wrap">
      	<form action="/createTask" method="post">
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="taskName" placeholder="Name" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Name" type="text">
         </div>
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" type="text"></textarea>
         </div>
         <div class="form-group">
-            <input autocomplete="off" autofocus class="form-control" name="languages" placeholder="Languages Needed" type="text">
+            <input class="form-control" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
         </div>
         <!-- <div class = "wrapper">
         	<div class = "title">
@@ -41,17 +41,17 @@
         </div> -->
         
         <div class="form-group">
-            <input class="form-control" name="minHours" placeholder="Minimum Hours" type="number"></input>
+            <input class="form-control" name="hmin" placeholder="Minimum Hours" type="number"></input>
         </div>
         <div class="form-group">
-            <input class="form-control" name="maxHours" placeholder="Maximum Hours" type="number"></input>
+            <input class="form-control" name="hmax" placeholder="Maximum Hours" type="number"></input>
         </div>
         <div class="form-group">
-            <input class="form-control" name="maxHours" placeholder="Max Collaborators" type="number"></input>
+            <input class="form-control" name="cmax" placeholder="Max Collaborators" type="number"></input>
         </div>
         <div class="mb-3">
           <label for="formFile" class="form-label">Task Image</label>
-          <input class="form-control" type="file" id="taskImage">
+          <input class="form-control" type="file" id="image" name= "image">
         </div>
         <button class="btn btn-primary" type="submit">Create Task</button>
     </form>

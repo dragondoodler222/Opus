@@ -38,16 +38,7 @@ db = SQL("sqlite:///passwords.db")
 @app.route("/")
 @login_required
 def index():
-    tasks = [{
-        "points" : 500,
-        "title" : "Python Project (Very Charitable)",
-        "creator" : "jonah",
-        "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nibh sem, tristique sit amet nisi eu, venenatis dapibus urna. Vivamus molestie iaculis sem in scelerisque. Mauris tempus rhoncus mauris. In hac habitasse platea dictumst. Nulla vitae tellus sed nulla tincidunt consectetur. Nulla sed sem in eros aliquet consequat. Phasellus condimentum nisl at ipsum consectetur venenatis. Aliquam lorem odio, sagittis ut lectus nec, maximus pretium arcu. Donec molestie vulputate congue. Aenean id purus mollis, dictum ex et, eleifend eros. Proin lacinia tristique nibh, in dapibus lacus sagittis gravida. Praesent aliquam tincidunt tempus.",
-        "hrs-min" : 4,
-        "hrs-max" : 5,
-        "collaborators-count" : 2,
-        "collaborators-max" : 3
-    }]
+    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
     return render_template("index.html",tasks = tasks)
 
 
