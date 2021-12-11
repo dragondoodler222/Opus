@@ -6,21 +6,34 @@
 {%block head%}
 <head>
 	<link rel="stylesheet" href="/static/taskCreation.css">
+
 </head>
 {% endblock %}
 
 {% block main %}
      <!-- This was basically the template I was thinking for all the stuff yeah-->
      <div class = "wrap">
-     	<form action="/createTask" method="post">
+     	<form id = "taskform" action="/createTask" method="post">
         <div class="form-group">
             <input autocomplete="off" autofocus class="form-control" name="title" placeholder="Name" type="text">
         </div>
         <div class="form-group">
             <textarea class="form-control" name="description" placeholder="Description" type="text"></textarea>
         </div>
-        <div class="form-group">
+        <!-- <div class="form-group">
             <input class="form-control" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
+        </div> -->
+        <div class = "lang-container">
+          <div class = "form-group input-container">
+            <div class = "title">
+              <h4>Languages Needed</h4>
+              <p>Add a comma after each language or press enter</p>
+            </div>
+            <input class="form-control" id = "languages" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
+            <div class = "language-container">
+              
+            </div>
+          </div>
         </div>
         <!-- <div class = "wrapper">
         	<div class = "title">
@@ -40,7 +53,7 @@
         	</div>
         </div> -->
         
-        <div class="form-group">
+        <div class="form-group" style="padding-top: 10px;">
             <input class="form-control" name="hmin" placeholder="Minimum Hours" type="number"></input>
         </div>
         <div class="form-group">
@@ -56,5 +69,6 @@
         <button class="btn btn-primary" type="submit">Create Task</button>
     </form>
      </div>
+     <script type="text/javascript" src="/static/languages.js"></script>
      
 {% endblock %}

@@ -1,46 +1,58 @@
-const ul = document.querySelector("ul"),
-input = document.querySelector("input"),
-tagNumb = document.querySelector(".details span");
-let maxTags = 10,
-tags = ["coding", "nepal"];
-countTags();
-createTag();
-function countTags(){
-    input.focus();
-    tagNumb.innerText = maxTags - tags.length;
-}
-function createTag(){
-    ul.querySelectorAll("li").forEach(li => li.remove());
-    tags.slice().reverse().forEach(tag =>{
-        let liTag = `<li>${tag} <i class="uit uit-multiply" onclick="remove(this, '${tag}')"></i></li>`;
-        ul.insertAdjacentHTML("afterbegin", liTag);
-    });
-    countTags();
-}
-function remove(element, tag){
-    let index  = tags.indexOf(tag);
-    tags = [...tags.slice(0, index), ...tags.slice(index + 1)];
-    element.parentElement.remove();
-    countTags();
-}
-function addTag(e){
-    if(e.key == "Enter"){
-        let tag = e.target.value.replace(/\s+/g, ' ');
-        if(tag.length > 1 && !tags.includes(tag)){
-            if(tags.length < 10){
-                tag.split(',').forEach(tag => {
-                    tags.push(tag);
-                    createTag();
-                });
-            }
-        }
-        e.target.value = "";
+const langInput = document.querySelector("#languages");
+const form = document.querySelector("#taskform");
+
+const langContainer = document.querySelector(".language-container");
+const langs = [];
+
+const createTag = (tagValue) => {
+    const value = tagValue.trim();
+
+    if (value === "" || langs.includes(value)) return;
+
+    const tag = document.createElement("span");
+    const tagContent = document.createTextNode(value);
+    tag.setAttribute('class', 'tag');
+    tag.appendChild(tagContent);
+
+    const close = document.createElement('span');
+    close.setAttribute('class', 'remove-tag');
+    close.innerHTML = '&#10006;'
+    close.onclick = handleRemoveTag;
+
+    tag.appendChild(close);
+    langContainer.appendChild(tag);
+    langs.push(tag);
+    langInput.value = '';
+    langInput.focus();
+};
+
+const handleRemoveTag = (e) => {
+    const item = e.target.textContent;
+    e.target.parentElement.remove();
+    langs.splice(langs.indexOf(item), 1);
+};
+
+const handleFormSubmit = (e) => {
+    e.preventDefault();
+    createTag(langInput.value);
+};
+
+langInput.addEventListener('keyup', (e) => {
+    const { key } = e;
+    if (key === ','){
+        createTag(langInput.value.substring(0,langInput.value.length-1));
     }
-}
-input.addEventListener("keyup", addTag);
-const removeBtn = document.querySelector(".details button");
-removeBtn.addEventListener("click", () =>{
-    tags.length = 0;
-    ul.querySelectorAll("li").forEach(li => li.remove());
-    countTags();
 });
+
+form.addEventListener('submit', handleFormSubmit);
+
+
+
+
+
+
+
+
+
+
+
