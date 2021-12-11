@@ -48,7 +48,8 @@
     {% if is_user_task %}
     <tr>
       <td colspan="2" width="100%" style="text-align: center;">
-        <button onclick = "openConfirmModal()" class="btn btn-primary reject-button">Delete</button>
+        <button onclick = "openCompleteConfirmModal()" class="btn btn-primary accept-button">Mark Task as Complete</button>
+        <button onclick = "openDeleteConfirmModal()" class="btn btn-primary reject-button">Delete</button>
       </td>
     </tr>
     {% elif is_collab_task %}
@@ -72,8 +73,17 @@
   <div class="modal-content">
     <span class="close">&times;</span>
     <h2>Are you sure you want to delete "{{ task.title }}."</h2>
-    <p id="">This is a permenant action, you cannot undo after confirming.</p>
+    <p>This is a permenant action, you cannot undo after confirming.</p>
     <button onclick = "deleteTask()" class="btn btn-primary reject-button">Delete Task</button>
+  </div>
+</div>
+
+<div id="project-modal2" class="modal2">
+  <div class="modal-content2">
+    <span class="close2">&times;</span>
+    <h2>Are you sure you want to delete "{{ task.title }}."</h2>
+    <p>This is a permenant action, you cannot undo after confirming.</p>
+    <button onclick = "completeTask()" class="btn btn-primary accept-button">Mark Task as Completed</button>
   </div>
 </div>
 <script src="/static/task.js"></script>

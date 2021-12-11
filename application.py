@@ -81,23 +81,23 @@ def profile(username):
 @app.route("/notifications",methods=['POST', 'GET'])
 @login_required
 def notifications():
-    notifications = [
-        {
-            "format" : "join-prompt",
-            "user" : "dashiell",
-            "task-id" : 1
-        },
-        {
-            "format" : "accept-notification",
-            "task-name" : "Scheme Project :)",
-            "task-id" : 2
-        },
-        {
-            "format" : "reject-notification",
-            "task-name" : "Ada Project :(",
-            "task-id" : 3
-        }
-    ]
+    # notifications = [
+    #     {
+    #         "format" : "join-prompt",
+    #         "user" : "dashiell",
+    #         "task-id" : 1
+    #     },
+    #     {
+    #         "format" : "accept-notification",
+    #         "task-name" : "Scheme Project :)",
+    #         "task-id" : 2
+    #     },
+    #     {
+    #         "format" : "reject-notification",
+    #         "task-name" : "Ada Project :(",
+    #         "task-id" : 3
+    #     }
+    # ]
     notifications = db.execute("SELECT * FROM users WHERE id = :id", id=session['user_id'])[0]['notifications']
     if notifications:
         notifications = debyte(notifications)
@@ -105,17 +105,42 @@ def notifications():
         notifications = []
 
     if request.method == "POST":
+        notifications.pop(int(request.form['i']))
+        print("BANANA (GUY) (BILL)" +request.form['i'])
+        db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=session['user_id'], c=tobinary(notifications))
+
         if request.form["request_type"] == "Accept":
-            data = debyte(db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['identifier'])[0]['collaborators'])
+            the_task = db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['identifier'])[0]
+            data = debyte(the_task['collaborators'])
             if data is None: data = []
             person = db.execute("SELECT * FROM users WHERE username = :user", user=request.form['user'])[0]
             if not (person['id'] in data):
                 data.append(person['id'])
             db.execute("UPDATE tasks SET collaborators = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(data))
+            othersNotifications = debyte(person['notifications'])
+            othersNotifications.insert(0,{
+                "format" : "accept-notification",
+                "task-name" : the_task['title'],
+                "task-id" : the_task['id']
+                })
+            if len(othersNotifications) > 11:
+                othersNotifications = other_user[:11]
+            db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=person['id'], c=tobinary(othersNotifications))
+
         else:
-            pass
-        notifications.pop(int(request.form['i']))
-        db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(notifications))
+            the_task = db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['identifier'])[0]
+            person = db.execute("SELECT * FROM users WHERE username = :user", user=request.form['user'])[0]
+            othersNotifications = debyte(person['notifications'])
+            othersNotifications.insert(0,{
+                "format" : "reject-notification",
+                "task-name" : the_task['title'],
+                "task-id" : the_task['id']
+                })
+            if len(othersNotifications) > 11:
+                othersNotifications = other_user[:11]
+            db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=person['id'], c=tobinary(othersNotifications))
+
+
         return redirect("/notifications")
     else:
         user=getuser(session, db)
@@ -224,16 +249,19 @@ def createTask():
     db.execute("INSERT INTO tasks (id, title, description, languages, image, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['image'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
     return redirect("/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
 
-@app.route("/task/<id>")
+@app.route("/task/<id>", methods=["GET", "POST"])
 @login_required
 def task(id):
-    task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
-    creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
-    ids = debyte(task['collaborators'])
-    task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]
-    collaborators = task['collaborators']
-    task["points"] = calculate_points(task)
-    return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db))
+    if request.method == "GET"
+        task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+        creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
+        ids = debyte(task['collaborators'])
+        task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]
+        collaborators = task['collaborators']
+        task["points"] = calculate_points(task)
+        return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db))
+    else:
+        pass
 
 def errorhandler(e):
     """Handle error"""

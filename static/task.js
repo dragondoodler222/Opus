@@ -11,7 +11,7 @@ modal.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
 var modalIndex = 0;
 var modalImages = []
 // When the user clicks on the button, open the modal 
-openConfirmModal = () => {
+openDeleteConfirmModal = () => {
 	modal.style.display = "flex";
 };
 
@@ -31,3 +31,21 @@ document.getElementsByClassName("modal")[0].onclick = function(event) {
 	modal.style.display = "none";
 }
 
+var modal2 = document.getElementById("project-modal2");
+var span2 = document.getElementsByClassName("close2")[0];
+
+modal2.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
+openCompleteConfirmModal = () => modal2.style.display = "flex";
+
+function completeTask() {
+	modal2.style.display = "none";
+	window.location = '/';
+}
+
+span2.onclick = function() {
+	modal2.style.display = "none";
+}
+
+document.getElementsByClassName("modal2")[0].onclick = function(event) {
+	modal2.style.display = "none";
+}
