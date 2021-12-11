@@ -27,11 +27,7 @@ def after_request(response):
 #app.jinja_env.filters["usd"] = usd
 
 # Configure session to use filesystem (instead of signed cookies)
-<<<<<<< Updated upstream
 app.config["SESSION_FILE_DIR"] = mkdtemp() 
-=======
-app.config["SESSION_FILE_DIR"] = mkdtemp()  
->>>>>>> Stashed changes
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -54,8 +50,12 @@ def profile(username):
         other_user = get_user_from_name(username, db)
     else:
         other_user = user
-    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=other_user["id"])
+    alltasks = db.execute("SELECT * FROM tasks")
 
+    tasks = []
+    for task in alltasks:
+        if (alltasks['creator'] = other_user['id'] or other_user['id'] in debyte(alltasks['collaborators'])):
+            tasks.append(task)
     
     return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
@@ -173,6 +173,7 @@ def createTask():
 def task(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
     creator = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
+    task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in debyte(task['collaborators'])]
     print(task)
     print(creator)
     return render_template("task.html", task=task, creator=creator, user=getuser(session, db))
