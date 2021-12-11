@@ -76,7 +76,7 @@ h2 {
 
 .active-task-wrapper {
 	padding: 30px 100px 40px;
-	background: white;
+	background: var(--foreground-1);
 	width: 100%;
 }
 

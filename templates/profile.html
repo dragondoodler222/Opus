@@ -55,9 +55,11 @@
 				</div>
 			</div>
 			<div class="user-tags">
+			{% for t in tags %}
 				<span class="tag" style="font-family:Arial, FontAwesome">
-					&#xf091; <b style="margin-left: 5px;"> Top 100</b>
+					&#x{{t[0]}};<b style='margin-left: 10px;'>{{t[1]}}</b>
 				</span>
+			{% endfor %}
 			</div>
 		</div>
 

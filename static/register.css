@@ -70,3 +70,13 @@ background: linear-gradient(to left bottom, #3db2ff, #6f9fff, #a485f5, #d264d5, 
 	min-width: 50px;
 	text-align: center;
 }
+@media only screen and (max-width: 600px) {
+  .wrapper {
+  	left:0;
+  	position: absolute;
+    right:0;
+    margin: 20px;
+    padding: 10px 10px 30px;
+    margin-top: 10%;
+  }
+}
