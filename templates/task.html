@@ -84,11 +84,20 @@
 </div>
 
 <div class="chatroom">
-  {% for p in posts %}
-  <div class="post">
-    <p>{{ p.author }}: {{ p.message }}</p>
-  </div>
-  {% endfor %}
+  {% if lenPosts > 0 %}
+    {% for p in posts %}
+    <div class="post">
+      <p>{{ uid_to_username[p.author] }}: {{ p.message }}</p>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p>There are no messages in this chat. Be the first to send a message.</p>
+    <form id = "sendmsg" action="">
+      <input type="hidden" name="author" value="{{ user.id }}">
+      <input type="hidden" name="task" value="{{ task.id }}">
+      <input type="text" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
+    </form>
+  {% endif %}
 </div>
 
 <div id="project-modal" class="modal">
@@ -108,5 +117,6 @@
     <button onclick = "completeTask()" class="btn btn-primary accept-button">Mark Task as Completed</button>
   </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script src="/static/task.js"></script>
 {% endblock %}
