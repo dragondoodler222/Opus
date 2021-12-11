@@ -50,7 +50,10 @@ def get_user_from_id(id, db):
     return user
 
 def calculate_points(task):
-    total = int(min((task['hmin']+task['hmax'])/3 * 100, 500))
+    if task['hmin'] and task['hmax']:
+        total = int(min((task['hmin']+task['hmax'])/2 * 100, 500))
+    else:
+        total = 0
     return total
 
 
