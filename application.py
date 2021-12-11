@@ -293,6 +293,7 @@ def task(id):
                 person['notifications'].insert(0, {
                     "format" : "delete",
                     "task-id" : task['id'],
+                    "task-name" : task['title']
                 })
                 db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
             db.execute("DELETE FROM tasks WHERE id = :id", id=id)
@@ -307,6 +308,7 @@ def task(id):
                 person['notifications'].insert(0, {
                     "format" : "complete",
                     "task-id" : task['id'],
+                    "task-name" : task['title']
                 })
                 db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
                 db.execute("UPDATE users SET points = :p WHERE id = :id", p=person['points'], id=collaborator)
@@ -319,6 +321,7 @@ def task(id):
                 "user" : db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]['username'],
                 "format" : "join-prompt",
                 "task-id" : task['id'],
+                "task-name" : task['title']
             })
             db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=task['creator'])
             return redirect("/task/" + id)
