@@ -61,7 +61,7 @@
     {% else %}
     <tr>
       <td colspan="2" width="100%" style="text-align: center;">
-        <button {{"disabled" if issent else ""}} onclick = "postData('join')" class="btn btn-primary accept-button">Request to Join</button>
+        <button onclick = "postData('join')" class="btn btn-primary accept-button">Request to Join</button>
       </td>
     </tr>
     {% endif %}
@@ -85,6 +85,9 @@
 
 <div class="chatroom">
   {% for p in posts %}
+  <div class="post">
+    <p>{{ p.author }}: {{ p.message }}</p>
+  </div>
   {% endfor %}
 </div>
 
