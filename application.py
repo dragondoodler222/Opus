@@ -84,7 +84,9 @@ def profile(username):
             task["points"] = calculate_points(task)
             tasks.append(task)
     
-    return render_template("profile.html",other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+    tags = [] #[("f091","Top 100")]
+
+    return render_template("profile.html",tags=tags,other_user=other_user,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 @app.route("/notifications",methods=['POST', 'GET'])
 @login_required

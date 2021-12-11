@@ -47,6 +47,11 @@
 }
 
 
+/*@media (prefers-color-scheme: dark) {
+  :root {
+
+  }
+}*/
 
 
 
@@ -166,4 +171,11 @@ fill: none;
   background: var(--error-red);
   color: var(--error-text);
   border-bottom: solid 1px var(--error-text);
+}
+
+
+@media only screen and (max-width: 600px) {
+  .navbar-nav.ml-auto.mt-2 {
+    background:var(--foreground-1);
+  }
 }

@@ -6,7 +6,9 @@
 }
 
 .tag {
-	background: red;
+	margin: 0 10px;
+	background: var(--foreground-2);
+	color: var(--tag-text);
 	padding: 3px 14px;
 	border-radius: 3px;
 }
@@ -40,7 +42,7 @@
 	left:0;
 	right: 0;
 	display: block;
-	background: var(--foreground-3);
+	background: var(--foreground-1);
 	width: 100%;
 	padding: 50px 50px;
 }

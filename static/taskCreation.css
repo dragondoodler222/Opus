@@ -24,6 +24,9 @@
     flex-direction: row;
     flex-wrap: wrap;
 }
+h4 {
+  text-align: center;
+}
 
 .remove-tag {
     cursor: pointer;
