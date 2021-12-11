@@ -16,8 +16,14 @@ openDeleteConfirmModal = () => {
 };
 
 function deleteTask() {
-	console.log("hi");
+	//POST HERE
 	modal.style.display = "none";
+	window.location = '/';
+}
+
+function completeTask() {
+	//POST HERE
+	modal2.style.display = "none";
 	window.location = '/';
 }
 
@@ -36,11 +42,6 @@ var span2 = document.getElementsByClassName("close2")[0];
 
 modal2.addEventListener('mousedown', function(e){ e.preventDefault(); }, false);
 openCompleteConfirmModal = () => modal2.style.display = "flex";
-
-function completeTask() {
-	modal2.style.display = "none";
-	window.location = '/';
-}
 
 span2.onclick = function() {
 	modal2.style.display = "none";
