@@ -176,7 +176,7 @@ def register():
 
     if error is not None: flash(error)
 
-    return render_template("register.html",user=getuser(session, db))
+    return render_template("register.html")
 
 @app.route("/taskCreation")
 def taskCreation():
