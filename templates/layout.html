@@ -41,7 +41,7 @@
                             <div id="user-information-dropdown">
                               <button onclick="showUserDropdown()" id="user-information-dropname" class="nav-link">{{ session.user_name }} <span class="dropdown-caret"></span></button>
                               <div id="user-information-dropdown-content">
-                                <a class="nav-link" href="/profile">Profile</a>
+                                <a class="nav-link" href="/profile/{{ session.user_name }}">Profile</a>
                                 <span class="sep"></span>
                                 <a class="nav-link" href="/logout">Logout</a>
                               </div>
@@ -73,7 +73,7 @@
         <footer>
             <!-- Do we wwant a footer?-->
         </footer>
-        <script src="static/scripts.js"></script>
+        <script src="/static/scripts.js"></script>
     </body>
 
 </html>

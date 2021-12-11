@@ -51,10 +51,14 @@ def index():
     return render_template("index.html",tasks = tasks)
 
 
-@app.route("/account")
+@app.route("/profile/<username>")
 @login_required
-def account():
-    return render_template("account.html")
+def profile(username):
+    user = {
+        "level" : 2,
+        "level-progress" : 32,
+    }
+    return render_template("profile.html",user=user)
 
 
 @app.route("/search", methods=["GET", "POST"])
