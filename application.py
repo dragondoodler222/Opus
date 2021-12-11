@@ -44,16 +44,21 @@ def index():
     other_tasks = []
     for task in alltasks:
         lst = None
+        f = False
         if (task['creator'] == session['user_id'] or session['user_id'] in debyte(task['collaborators'])):
             lst = tasks
         else:
             lst = other_tasks
+            f = True
         creator = get_user_from_id(task['creator'],db)
         task['creator'] = creator["username"]
         task["collaborators-count"] = len(debyte(task['collaborators']))
         task["points"] = calculate_points(task)
         
-        if not (lst == other_tasks and (task["collaborators-count"] == task["cmax"])):
+        if f:
+            if task["collaborators-count"] != task["cmax"]:
+                lst.append(task)
+        else:
             lst.append(task)
     return render_template("index.html",len=len,active_tasks = tasks,tasks = other_tasks,user=getuser(session, db))
 
@@ -173,7 +178,7 @@ def edit_information():
     email = user["email"]
         
     if request.method == "POST":
-        to_save = request.form.to_dict()
+        email = request.form.to_dict()["email"]
         db.execute("UPDATE users SET email = :email WHERE id = :id", email=email, id=user["id"])
         
     return render_template("edit_information.html",user=user,email=email,task_count=len(tasks))

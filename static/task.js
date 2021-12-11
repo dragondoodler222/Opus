@@ -16,13 +16,13 @@ openDeleteConfirmModal = () => {
 };
 
 function deleteTask() {
-	$.post("",{request_type: "delete"},() => window.location = '/');
+	$.post("",{request_type: "delete"});
 	modal.style.display = "none";
 }
 
 function completeTask() {
 	//POST HERE
-	$.post("",{request_type: "complete"},() => window.location = '/');
+	$.post("",{request_type: "complete"});
 	modal2.style.display = "none";
 }
 
