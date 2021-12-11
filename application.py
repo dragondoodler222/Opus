@@ -136,7 +136,7 @@ def notifications():
                 "task-id" : the_task['id']
                 })
             if len(othersNotifications) > 11:
-                othersNotifications = other_user[:11]
+                othersNotifications = othersNotifications[:11]
             db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=person['id'], c=tobinary(othersNotifications))
 
 
@@ -277,7 +277,54 @@ def task(id):
         task["points"] = calculate_points(task)
         return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]),is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db))
     else:
-        pass
+        task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+        # four options given - delete, complete, join, leave
+        if request.form['request_type'] == 'delete':
+            collaborators = debyte(task['collaborators'])
+            for collaborator in collaborators:
+                person = db.execute("SELECT * FROM users WHERE id = :id", id=collaborator)[0]
+                person['notifications'] = debyte(person['notifications'])
+                person['notifications'].insert(0, {
+                    "format" : "delete",
+                    "task-id" : task['id'],
+                })
+                db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
+            db.execute("DELETE FROM tasks WHERE id = :id", id=id)
+            return redirect("/")
+        elif request.form['request_type'] == 'complete':
+            points = calculate_points(task)
+            collaborators = debyte(task['collaborators'])
+            for collaborator in collaborators:
+                person = db.execute("SELECT * FROM users WHERE id = :id", id=collaborator)[0]
+                person['points'] += points
+                person['notifications'] = debyte(person['notifications'])
+                person['notifications'].insert(0, {
+                    "format" : "complete",
+                    "task-id" : task['id'],
+                })
+                db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
+                db.execute("UPDATE users SET points = :p WHERE id = :id", p=person['points'], id=collaborator)
+            db.execute("DELETE FROM tasks WHERE id = :id", id=id)
+            return redirect("/")
+        elif request.form['request_type'] == 'join': 
+            person = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
+            person['notifications'] = debyte(person['notifications'])
+            person['notifications'].insert(0, {
+                "user" : db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]['username'],
+                "format" : "join-prompt",
+                "task-id" : task['id'],
+            })
+            db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=task['creator'])
+            return redirect("/task/" + id)
+
+
+        elif request.form['request_type'] == 'leave':
+            task['collaborators'] = debyte(task['collaborators'])
+            task['collaborators'].remove(session['user_id'])
+            db.execute("UPDATE tasks SET collaborators = :p WHERE id = :id", id=id, p=tobinary(task['collaborators']))
+            return redirect("/task/" + id)
+
+
 
 def errorhandler(e):
     """Handle error"""

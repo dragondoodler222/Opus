@@ -53,3 +53,36 @@ div.error {
 	border: thin solid orange;
   	background-color: rgb(255, 237, 215);
 }
+
+.form-group{
+	display: flex;
+	flex-wrap: wrap;
+	flex-flow: row wrap;
+	justify-content: space-evenly;
+}
+
+.form-group label{
+   flex-grow: 0;
+   flex-shrink: 0;
+   flex-basis: 50%;
+   box-sizing: border-box;
+   margin: 1rem 0;
+   /*padding-right: 20px;*/
+}
+
+.above-form{
+	text-align: center;
+}
+
+.submit-button{
+	margin: auto;
+	width: 400px;
+}
+
+.center-button{
+	display: flex;
+}
+
+.form-div{
+	display: flex;
+}
