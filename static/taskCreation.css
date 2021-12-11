@@ -1,8 +1,8 @@
 .lang-container{
-    color: #495057;
-    background-color: #fff;
+    color: var(--input-text);
+    background-color: var(--foreground-0);
     background-clip: padding-box;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--input-border);
     border-radius: 0.25rem;
 }
 
@@ -12,10 +12,10 @@
 
 .tag{
     padding: 2px 5px;
-    background: #e5e5f7;
+    background: var(--foreground-2);
     border-radius: 3px;
     margin-top: 5px;
-    color: #8282a1;
+    color: var(--tag-text);
     margin-right: 5px;
 }
 
@@ -28,10 +28,10 @@
 .remove-tag {
     cursor: pointer;
     margin: auto 0 auto 2px;
-    color: #b4b4d4;
+    color: var(--tag-remove);
 }
 .remove-tag:hover {
-    color: #8282a1;
+    color: var(--tag-text);
 }
 
 label { display: block;}

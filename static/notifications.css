@@ -2,7 +2,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
-  border: 1px solid #ddd;
+  border: 1px solid var(--table-border);
 }
 
 th, td {
@@ -16,22 +16,22 @@ td.acceptreject {
 }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: var(--foreground-4);
 }
 
 .accept-button {
-  background: #2FDD92;
+  background: var(--focus-green-light);
   margin-right: 20px;
 }
 .accept-button:hover {
-  background: #34BE82;
+  background: var(--focus-green-dark);
 }
 
 .reject-button {
-  background: #EC255A;
+  background: var(--focus-red-light);
 }
 .reject-button:hover {
-  background: #d11749;
+  background: var(--focus-red-dark);
 }
 
 a:hover, a:visited, a:link, a:active

@@ -1,19 +1,47 @@
 :root {
   --text-main: #323232;
   --text-weak: #525252;
+  --text-medium-1: #4a4a4a;
+  --text-medium-2: #3d3d3d;
+  --text-light: #ababab;
 
+  --input-text: #495057;
+  --input-border: #ced4da;
+
+  --table-border: #ddd;
+  --close-button: #aaa;
+  --close-button-hover: black;
+  --level-display-bg: #eee;
+
+  --foreground-0: white;
   --foreground-1: #F8F9FA;
-
   --foreground-2: #e5e5f7;
-
   --foreground-3: #F5F5FF;
+  --foreground-4: #f2f2f2;
+
+
+  --tag-text: #8282a1;
+  --tag-remove:#b4b4d4;
 
   --border-1: #DEE2E6;
 
   --background-1: #EDF1F2;
 
-
+  --focus-skyblue: #3DB2FF; /* used for: tasks completed*/
+  --focus-pink: #f037a5; /* used for: points*/
+  --focus-mint: #57CC99; /* used for: active tasks*/
+  
+  --focus-selectblue : #007bff; /* used for: drop down selection*/
   --focus-navyblue: #2D46B9;
+
+  --focus-green-light: #2FDD92;
+  --focus-green-dark: #34BE82;
+
+  --focus-red-light: #EC255A;
+  --focus-red-dark: #d11749;
+
+  --error-red: #ff759d;
+  --error-text: #8a1134;
 
   font-size: 2vh;
 }
@@ -51,8 +79,8 @@
 
 #user-information-dropdown-content {
   border-radius: 10px;
-  border: 1px #dee2e6 solid;
-  background: #f8f9fa;
+  border: 1px var(--border-1) solid;
+  background: var(--foreground-1);
   display: none;
   position: absolute;
   right: 25px;
@@ -78,7 +106,7 @@
   font-size: 14px;
 }
 #user-information-dropdown-content .sep {
-  border: .5px #dee2e6 solid;
+  border: .5px var(--border-1) solid;
   width: 100%;
   height: 0px;
   color: black;
@@ -90,11 +118,11 @@
 
 #user-information-dropdown-content a:hover {
   color: white;
-  background-color: #007bff
+  background-color: var(--focus-selectblue);
 }
 
 .level-display {
-  stroke: #F037A5;
+  stroke: var(--focus-pink);
   fill: none;
   stroke-width: 3.5;
   /*stroke-linecap: round;*/
@@ -107,12 +135,12 @@
 
 .level-display-bg {
 fill: none;
-  stroke: #eee;
+  stroke: var(--level-display-bg);
   stroke-width: 4;
 }
 
 .level {
-  fill: #F037A5;
+  fill: var(--focus-pink);
   font-family: sans-serif;
   font-size: 1em;
   text-anchor: middle;
@@ -126,7 +154,7 @@ fill: none;
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #EC255A;
+  background: var(--focus-red-light);
   font-size: 9px;
   justify-content: center;
   align-items: center;
@@ -135,7 +163,7 @@ fill: none;
 
 
 .alert {
-  background: #ff759d;
-  color: #8a1134;
-  border-bottom: solid 1px #8a1134;;
+  background: var(--error-red);
+  color: var(--error-text);
+  border-bottom: solid 1px var(--error-text);
 }

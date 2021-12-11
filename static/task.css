@@ -28,7 +28,7 @@
 }
 
 .close2 {
-  color: #aaa;
+  color: var(--close-button);
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -37,7 +37,7 @@
 
 .close2:hover,
 .close2:focus {
-  color: black;
+  color: var(--close-button-hover);
   text-decoration: none;
   cursor: pointer;
 }
@@ -72,7 +72,7 @@
 .close {
 	position: absolute;
 	right: 15px;
-  color: #aaa;
+  color: var(--close-button);
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -93,18 +93,18 @@
 
 
 .accept-button {
-  background: #2FDD92;
+  background: var(--focus-green-light);
   margin-right: 20px;
 }
 .accept-button:hover {
-  background: #34BE82;
+  background: var(--focus-green-dark);
 }
 
 .reject-button {
-  background: #EC255A;
+  background: var(--focus-red-light);
 }
 .reject-button:hover {
-  background: #d11749;
+  background: var(--focus-red-dark);
 }
 
 
@@ -116,7 +116,7 @@ td.title {
 	line-height: .8;
 }
 .creator-text {
-	color: #353535;
+	color: var(--text-main);
 	font-size: 20px;
 }/*
 .hours-text, .collaborator-count {
@@ -124,13 +124,13 @@ td.title {
 	font-weight: bold;
 }*/
 .points {
-	color: #353535;
+	color: var(--text-main);
 	display: block;
 	font-weight: bold;
 	font-size: 1.2em;
 }
 .points span {
-	color: #F037A5;
+	color: var(--focus-pink);
 	display: inline-block;
 	margin-right: .2em;
 }
@@ -138,14 +138,14 @@ td.title {
 	display: inline-block;
 }
 .stats {
-	color: #353535;
+	color: var(--text-main);
 	font-weight: normal;
 	display: flex;
 	justify-content: space-between;
 	width: 100%;
 }
 .desc-text {
-	color: #5B5B5B;
+	color: var(--text-weak);
 }
 
 .pts-td {
@@ -155,7 +155,7 @@ td.title {
 
 
 .emails {
-  border: 1px solid #c4c4c4;
+  border: 1px solid var(--border-1);
   line-height: .8;
 }
 
