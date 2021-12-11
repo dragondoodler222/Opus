@@ -45,21 +45,9 @@ def index():
 @app.route("/profile/<username>")
 @login_required
 def profile(username):
-    user = {
-        "level" : 2,
-        "level-progress" : 32,
-    }
-    active_tasks = [{
-        "points" : 500,
-        "title" : "Python Project (Very Charitable)",
-        "creator" : "jonah",
-        "description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nibh sem, tristique sit amet nisi eu, venenatis dapibus urna. Vivamus molestie iaculis sem in scelerisque. Mauris tempus rhoncus mauris. In hac habitasse platea dictumst. Nulla vitae tellus sed nulla tincidunt consectetur. Nulla sed sem in eros aliquet consequat. Phasellus condimentum nisl at ipsum consectetur venenatis. Aliquam lorem odio, sagittis ut lectus nec, maximus pretium arcu. Donec molestie vulputate congue. Aenean id purus mollis, dictum ex et, eleifend eros. Proin lacinia tristique nibh, in dapibus lacus sagittis gravida. Praesent aliquam tincidunt tempus.",
-        "hrs-min" : 4,
-        "hrs-max" : 5,
-        "collaborators-count" : 2,
-        "collaborators-max" : 3
-    }]*4
-    return render_template("profile.html",user=user,active_tasks=active_tasks,task_count=len(active_tasks))
+    user = db.execute("SELECT 1 FROM users WHERE id = :id", id=session["user_id"])
+    tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
+    return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks),level=user['points']**.5//10, len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])
