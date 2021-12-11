@@ -40,3 +40,10 @@ def get_user_from_name(name, db):
     user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
 
     return user
+
+def calculate_points(task):
+    return 500
+
+
+
+
