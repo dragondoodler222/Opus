@@ -1,6 +1,7 @@
 window.addEventListener('DOMContentLoaded',function(){
     let formEl = document.getElementById('taskform');
     formEl.addEventListener('submit', function(ev){
+        ev.preventDefault();
         let titleInput = document.getElementById('title');
         let descriptionInput = document.getElementById('description');
         let languagesInput = document.getElementById('languages');
@@ -8,15 +9,16 @@ window.addEventListener('DOMContentLoaded',function(){
         let hmaxInput = document.getElementById('hmax');
         let cmaxInput = document.getElementById('cmax');
         let imageInput = document.getElementById('image');
-        let container = document.getElementsById("langtags");
+        let container = document.getElementById("langtags");
         let spans = container.getElementsByTagName("span");
         console.log(spans)
         console.log(container)
         console.log(spans.length)
+        rv = true;
         if (titleInput.value == "") {
             titleInput.classList.add('error');
             titleInput.parentNode.classList.add('error');
-            ev.preventDefault();
+            rv = false;
         } else {
             /* clear error classes and let submit happen */
             titleInput.classList.remove('error');
@@ -25,7 +27,7 @@ window.addEventListener('DOMContentLoaded',function(){
         if (spans.length == 0) {
             languagesInput.parentNode.parentNode.classList.add('error');
             languagesInput.parentNode.parentNode.parentNode.classList.add('error');
-            ev.preventDefault();
+            rv = false;
         } else {
             /* clear error classes and let submit happen */
             languagesInput.parentNode.parentNode.classList.remove('error');
@@ -34,7 +36,7 @@ window.addEventListener('DOMContentLoaded',function(){
         if (hmaxInput.value == "") {
             hmaxInput.classList.add('error');
             hmaxInput.parentNode.classList.add('error');
-            ev.preventDefault();
+            rv = false;
         } else {
             /* clear error classes and let submit happen */
             hmaxInput.classList.remove('error');
@@ -43,7 +45,7 @@ window.addEventListener('DOMContentLoaded',function(){
         if (hminInput.value == "") {
             hminInput.classList.add('error');
             hminInput.parentNode.classList.add('error');
-            ev.preventDefault();
+            rv = false;
         } else {
             /* clear error classes and let submit happen */
             hminInput.classList.remove('error');
@@ -52,12 +54,13 @@ window.addEventListener('DOMContentLoaded',function(){
         if (cmaxInput.value == "") {
             cmaxInput.classList.add('error');
             cmaxInput.parentNode.classList.add('error');
-            ev.preventDefault();
+            rv = false;
         } else {
             /* clear error classes and let submit happen */
             cmaxInput.classList.remove('error');
             cmaxInput.parentNode.classList.remove('error');
         }
+        return rv;
 
     });
 }); 

@@ -11,7 +11,10 @@
 }
 
 .tag{
-    padding-right: 2px;
+    padding: 2px 5px;
+    background: #e5e5f7;
+    border-radius: 3px;
+    margin-top: 3px;
 }
 
 .language-container{

@@ -46,17 +46,17 @@
         
         <div class="form-group" style="padding-top: 10px;">
           <label>
-            <input class="form-control" name="hmin" placeholder="Minimum Hours" id="hmin" type="number">
+            <input class="form-control" name="hmin" min=1 onchange="document.getElementById('hmax').min = this.value;" placeholder="Minimum Hours" id="hmin" type="number">
           </label>
         </div>
         <div class="form-group">
           <label>
-            <input class="form-control" name="hmax" placeholder="Maximum Hours" id="hmax" type="number">
+            <input class="form-control" name="hmax" max = 4096 onchange="document.getElementById('hmin').max = this.value;" placeholder="Maximum Hours" id="hmax" type="number">
           </label>
         </div>
         <div class="form-group">
           <label>
-            <input class="form-control" name="cmax" placeholder="Max Collaborators" id="cmax" type="number">
+            <input class="form-control" min=2 max=10 name="cmax" placeholder="Max Collaborators (2-10)" id="cmax" type="number">
           </label> 
         </div>
         <div class="mb-3">
