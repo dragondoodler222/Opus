@@ -35,8 +35,8 @@ input.error {
   background-color: rgb(255, 237, 215);
   
 }
-input.error::after {
-  content : "This field is required";
+.wrap h2::after {
+  content : "    Please fill out the required fields";
   color: orange;
   font-weight: bold;
 }
