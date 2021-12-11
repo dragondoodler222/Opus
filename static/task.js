@@ -16,7 +16,7 @@ openDeleteConfirmModal = () => {
 };
 
 function deleteTask() {
-	console.log("hi");
+	$.post("",{request_type: "DELETE"},() => window.location.reload());
 	modal.style.display = "none";
 	window.location = '/';
 }
