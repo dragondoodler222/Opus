@@ -1,6 +1,7 @@
 import os
 import requests
 import urllib.parse
+import pickle
 
 from flask import redirect, render_template, request, session
 from functools import wraps
@@ -17,3 +18,10 @@ def login_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
+
+def tobinary(obj):
+    return pickle.dumps(obj)
+
+def debyte(obj):
+    return pickle.loads(obj)
+
