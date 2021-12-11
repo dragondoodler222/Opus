@@ -98,7 +98,11 @@ def notifications():
             "task-id" : 3
         }
     ]
-    notifications = debyte(db.execute("SELECT * FROM users WHERE id = :id", id=session['user_id'])[0]['notifications'])
+    notifications = db.execute("SELECT * FROM users WHERE id = :id", id=session['user_id'])[0]['notifications']
+    if notifications:
+        notifications = debyte(notifications)
+    else:
+        notifications = []
 
     if request.method == "POST":
         if request.form["request_type"] == "Accept":
