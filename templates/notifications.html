@@ -28,6 +28,10 @@
            <td></td>
         {% elif notification["format"] == "reject-notification"%}
           <td>You have been rejected from <a>{{task['title']}}</a></td><td></td>
+        {% elif notification["format"] == "complete" %}
+          <td>You have completed <a>{{task['title']}}</a></td><td></td>
+        {% elif notification["format"] == "delete" %}
+          <td>Task <a>{{task['title']}}</a> has been deleted</td><td></td>
         {% endif %}
       </tr>
        {% set i.value = i.value + 1 %}
