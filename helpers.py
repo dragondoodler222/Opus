@@ -30,6 +30,8 @@ def getuser(session, db):
     
     user["level"]=int(user['points']**.5//10)
     user["level-progress"] = (user['points']**.5%8)/(((user["level"]+1)*10)**2)
+    user["notifications"] = debyte(user["notifications"])
+    user["notification-amount"] = len(user["notifications"])
 
     return user
 

@@ -67,7 +67,6 @@ def profile(username):
     else:
         other_user = user
     alltasks = db.execute("SELECT * FROM tasks")
-    other_tasks = []
     tasks = []
     for task in alltasks:
         if (task['creator'] == other_user['id'] or other_user['id'] in debyte(task['collaborators'])):
@@ -157,7 +156,24 @@ def search():
     else:
         return render_template("search.html",user=getuser(session, db))
 
-
+@app.route("/editinfo", methods=["GET","POST"])
+@login_required
+def edit_information():
+    user = getuser(session, db)
+    alltasks = db.execute("SELECT * FROM tasks")
+    tasks = []
+    for task in alltasks:
+        if (task['creator'] == user['id'] or user['id'] in debyte(task['collaborators'])):
+            task['creator'] = user["username"]
+            task["collaborators-count"] = len(debyte(task['collaborators']))
+            task["points"] = calculate_points(task)
+            tasks.append(task)
+    email = 'youremail@domain.com'
+        
+    if request.method == "POST":
+        to_save = request.form.to_dict()
+        # SAVE to_save['email']
+    return render_template("edit_information.html",user=user,email=email,task_count=len(tasks))
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
