@@ -85,31 +85,39 @@ def notifications():
         {
             "format" : "join-prompt",
             "user" : "dashiell",
-            "task-name" : "Python Projects (Very Charitable)"
+            "task-id" : 1
         },
         {
             "format" : "accept-notification",
-            "task-name" : "Scheme Project :)"
+            "task-name" : "Scheme Project :)",
+            "task-id" : 2
         },
         {
             "format" : "reject-notification",
-            "task-name" : "Ada Project :("
+            "task-name" : "Ada Project :(",
+            "task-id" : 3
         }
     ]
+    notifications = debyte(db.execute("SELECT * FROM users WHERE id = :id", id=session['user_id'])[0]['notifications'])
 
     if request.method == "POST":
         if request.form["request_type"] == "Accept":
-            pass
-            # MAKE THEM JOIN THE TASK
+            data = debyte(db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['identifier'])[0]['collaborators'])
+            if data is None: data = []
+            person = db.execute("SELECT * FROM users WHERE username = :user", user=request.form['user'])[0]
+            if not (person['id'] in data):
+                data.append(person['id'])
+            db.execute("UPDATE tasks SET collaborators = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(data))
         else:
             pass
-            # MAKE THEM JOIN THE TASK
-        return ""
+        notifications.pop(request.form['i'])
+        db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(notifications))
+        return redirect("/notifications")
     else:
         user=getuser(session, db)
         tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
 
-        return render_template("notifications.html",notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
+        return render_template("notifications.html",db=db,notifications=notifications,user=user,active_tasks=tasks,task_count=len(tasks), len=len)
 
 
 @app.route("/search", methods=["GET", "POST"])
