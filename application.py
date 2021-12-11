@@ -237,6 +237,9 @@ def register():
         if not request.form.get("username"):
             error = "Error: Invalid Username"
 
+        elif not request.form.get("email"):
+            error = "Error: Invalid Email"
+
         elif not request.form.get("password"):
             error = "Error: Invalid Password"
 
@@ -246,9 +249,10 @@ def register():
         elif len(db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))) != 0:
             error = "Error: Username is already taken"
         else:
-            db.execute("INSERT INTO users (id, username, hash) VALUES (?, ?, ?)", db.execute("SELECT count(*) FROM users")[0]['count(*)'] + 1, request.form.get("username"), generate_password_hash(request.form.get("password")))
+            db.execute("INSERT INTO users (id, username, hash, email) VALUES (?, ?, ?, ?)", db.execute("SELECT count(*) FROM users")[0]['count(*)'] + 1, request.form.get("username"), generate_password_hash(request.form.get("password")), request.form.get("email"))
 
             session["user_id"] = db.execute("SELECT count(*) FROM users")[0]['count(*)']
+            session["user_name"] = db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]['username']
 
             return redirect("/")
 
