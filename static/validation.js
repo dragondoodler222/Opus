@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded',function(){
     let formEl = document.getElementById('taskform');
     formEl.addEventListener('submit', function(ev){
-        ev.preventDefault();
+        
         let titleInput = document.getElementById('title');
         let descriptionInput = document.getElementById('description');
         let languagesInput = document.getElementById('languages');
@@ -60,7 +60,9 @@ window.addEventListener('DOMContentLoaded',function(){
             cmaxInput.classList.remove('error');
             cmaxInput.parentNode.classList.remove('error');
         }
-        return rv;
+        if (rv == false){
+            ev.preventDefault();
+        }
 
     });
 }); 
