@@ -114,7 +114,7 @@ def notifications():
             db.execute("UPDATE tasks SET collaborators = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(data))
         else:
             pass
-        notifications.pop(request.form['i'])
+        notifications.pop(int(request.form['i']))
         db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=request.form['identifier'], c=tobinary(notifications))
         return redirect("/notifications")
     else:

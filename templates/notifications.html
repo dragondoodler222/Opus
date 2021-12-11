@@ -20,8 +20,8 @@
         {% if notification["format"] == "join-prompt"%}
           <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{task['title']}}</a></td>
           <td class="acceptreject">
-            <button onclick = "postData(1,{{task['id']}}, {{notification['user']}}, {{i}})" class="btn btn-primary accept-button">Accept</button>
-            <button onclick = "postData(-1, {{task['id']}}, {{notification['user']}}, {{i}})" class="btn btn-primary reject-button">Reject</button>
+            <button onclick = "postData(1,{{task['id']}}, {{'\"'+notification['user']+'\"'}}, {{i}})" class="btn btn-primary accept-button">Accept</button>
+            <button onclick = "postData(-1, {{task['id']}}, {{'\"'+notification['user']+'\"'}}, {{i}})" class="btn btn-primary reject-button">Reject</button>
           </td>
         {% elif notification["format"] == "accept-notification"%}
           <td>You have been accepted for <a>{{task['title']}}</a></td>
