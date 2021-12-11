@@ -7,7 +7,7 @@ from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from helpers import login_required
+from helpers import login_required, getuser
 
 # Configure application
 app = Flask(__name__)
@@ -39,13 +39,13 @@ db = SQL("sqlite:///passwords.db")
 @login_required
 def index():
     tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
-    return render_template("index.html",tasks = tasks)
+    return render_template("index.html",tasks = tasks,user=getuser(session, db))
 
 
 @app.route("/profile/<username>")
 @login_required
 def profile(username):
-    user = db.execute("SELECT 1 FROM users WHERE id = :id", id=session["user_id"])
+    user=getuser(session, db)
     tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
     return render_template("profile.html",user=user,active_tasks=tasks,task_count=len(tasks),level=user['points']**.5//10, len=len)
 
@@ -54,9 +54,9 @@ def profile(username):
 @login_required
 def search():
     if request.method == "POST":
-        return render_template("response.html")
+        return render_template("response.html",user=getuser(session, db))
     else:
-        return render_template("search.html")
+        return render_template("search.html",user=getuser(session, db))
 
 
 
@@ -133,15 +133,15 @@ def register():
 
     if error is not None: flash(error)
 
-    return render_template("register.html")
+    return render_template("register.html",user=getuser(session, db))
 
 @app.route("/taskCreation")
 def taskCreation():
-    return render_template("taskCreation.html")
+    return render_template("taskCreation.html",user=getuser(session, db))
 
 @app.route("/createTask", methods=["GET", "POST"])
 def createTask():
-    pass
+    return redirect("/task")
     #if request.method == "POST":
         
 
