@@ -302,8 +302,21 @@ def task(id):
         uid_to_username = {}
         for p in posts:
             uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
-        print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
-        return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
+        
+        person = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
+        person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
+        
+        has_requested = False
+        print(person["notifications"])
+        for notif in person['notifications']:
+            print(notif["user"])
+            if notif["user"] == session["user_name"]:
+                has_requested = True
+                break
+        print(has_requested)
+
+        # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
+        return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
     else:
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         # four options given - delete, complete, join, leave

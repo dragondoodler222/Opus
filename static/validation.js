@@ -12,9 +12,7 @@ window.addEventListener('DOMContentLoaded',function(){
         let container = document.getElementById("langtags");
         let spans = container.getElementsByTagName("span");
         let hiddenInput = document.getElementById("hiddenInput");
-        console.log(spans)
-        console.log(container)
-        console.log(spans.length)
+        
         rv = true;
         if (titleInput.value == "") {
             titleInput.classList.add('error');

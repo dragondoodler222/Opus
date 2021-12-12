@@ -96,8 +96,14 @@
   background: var(--focus-green-light);
   margin-right: 20px;
 }
+.accept-button:disabled {
+  background: var(--focus-green-light);
+}
 .accept-button:hover {
   background: var(--focus-green-dark);
+}
+.accept-button:disabled:hover {
+  background: var(--focus-green-light);
 }
 
 .reject-button {

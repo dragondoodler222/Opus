@@ -61,7 +61,7 @@
     {% else %}
     <tr>
       <td colspan="2" width="100%" style="text-align: center;">
-        <button onclick = "postData('join')" class="btn btn-primary accept-button">Request to Join</button>
+        <button {{ should_disable }} onclick = "postData('join')" class="btn btn-primary accept-button">Request to Join</button>
       </td>
     </tr>
     {% endif %}
