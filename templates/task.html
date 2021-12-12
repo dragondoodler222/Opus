@@ -128,5 +128,15 @@
   </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+    function clientSideMessage(m) {
+      let msgDiv = document.getElementById("messages");
+      let newMsg = document.createElement("div");
+      let content = document.createElement("p");
+      content.innerHTML = "{{session["user_name"]}}" + ": " + m;
+      newMsg.appendChild(content);
+      msgDiv.appendChild(newMsg);
+    }
+  </script>
 <script src="/static/task.js"></script>
 {% endblock %}

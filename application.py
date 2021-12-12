@@ -327,9 +327,6 @@ def task(id):
         # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
         return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
     else:
-        print(request.form['request_type'])
-        print("BIBITY BOBITY UR BOP IS A BOOP")
-        print(request.form["request_type"])
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         # four options given - delete, complete, join, leave
         if request.form['request_type'] == 'delete':
@@ -382,7 +379,7 @@ def task(id):
             db.execute("UPDATE tasks SET collaborators = :p WHERE id = :id", id=id, p=tobinary(task['collaborators']))
             return redirect("/task/" + id)
         elif request.form['request_type'] == 'create_message':
-            print("still alive bob")
+            
             task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
             ids = debyte(task['collaborators'])
             task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]

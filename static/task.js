@@ -87,7 +87,6 @@ let checker;
 let task = document.getElementById("task_id");
 let task_id = document.getElementById("task_id").value;
 function get_messages() {
-	console.log("JIMMY")
 	$.getJSON('/get_messages/' + task_id, {
 	     //Get a JSON formatted value from the route _get_words, which will allow flask in python to communicate with AJAX in JS
 	}, function(data) {
@@ -98,6 +97,7 @@ function get_messages() {
 		if (checker){
 			let cleaned_messages = messages.filter(x => !checker.map(x => x['id']).includes(x['id']));
 			let uid_to_username = response.uid_to_username;
+			
 			for (ind in cleaned_messages){
 				let newMsg = document.createElement("div");
 				let content = document.createElement("p");
@@ -159,18 +159,22 @@ get_messages();
 //   });
 // })();
 
+
+
 formEl = document.getElementById("txtbox")
 $("#sendmsg").submit(function (e) {
-	console.log("boboboboboobob")
 	e.preventDefault();
+	clientSideMessage(formEl.value);
 	$.ajax({ 
 	    url: '/createPost', 
 	    type: 'POST', 
-	    data: $('#sendmsg').serialize()
+	    data: $('#sendmsg').serialize(),
+	    success: data => {
+	    	formEl.value = "";
+	    	let msgDiv = document.getElementById("messages");
+	    	msgDiv.removeChild(msgDiv.lastChild);
+    		get_messages();
+	    }
     });
-    console.log(formEl)
-    formEl.value = ""
-    get_messages();
-    get_messages();
 }); 
 
