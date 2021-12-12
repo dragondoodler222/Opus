@@ -5,7 +5,7 @@
 {% endblock %}
 {%block head%}
 <head>
-  <link rel="stylesheet" href="{{ url_for('static', filename='taskCreation.css')}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='taskCreation.css')}}">
   
 
 
@@ -32,7 +32,7 @@
           </label>
           <span class="input-group-btn" style="width:0px;"></span>            
           <label>
-            <input class="form-control" min=2 max=10 name="cmax" placeholder="Max Collaborators (2-10)" id="cmax" type="number">
+            <input class="form-control" min=2 max=10 name="cmax" placeholder="Max Collaborators (2-10) (Including you)" id="cmax" type="number">
           </label>
         </div>
         <div class="form-group" style="padding-top: 10px;">
@@ -70,8 +70,8 @@
      </div>
    </div>
      
-     <script type="text/javascript" src="{{ url_for('static', filename='languages.js')}"></script>
-     <script src="{{ url_for('static', filename='validation.js')}"></script>
+     <script type="text/javascript" src="{{ url_for('static', filename='languages.js')}}"></script>
+     <script src="{{ url_for('static', filename='validation.js')}}"></script>
      
      
 {% endblock %}

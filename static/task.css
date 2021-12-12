@@ -217,7 +217,7 @@ body {
 .messages{
   overflow-y: scroll;
   overflow-wrap: break-word;
-  height: 80vh;
+  height: 72vh;
 }
 #txtbox {
   background: var(--foreground-0);

@@ -293,16 +293,16 @@ def register():
 
     return render_template("register.html")
 
-@app.route("/taskCreation")
+@app.route("/taskcreator")
 @login_required
-def taskCreation():
+def tcreate():
     return render_template("taskCreation.html",user=getuser(session, db))
 
-@app.route("/createTask", methods=["POST"])
+@app.route("/createTask", methods=["GET","POST"])
 def createTask():
     task = request.form.to_dict()
-    db.execute("INSERT INTO tasks (id, title, description, languages, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
-    return redirect(root+"/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
+    db.execute("INSERT INTO tasks (title, description, languages, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", task['title'], task['description'], task['languages'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
+    return redirect("/opus/task/" + str(db.execute("SELECT * FROM tasks ORDER BY id DESC")[0]['id']))
 
 @app.route("/task/<id>", methods=["GET", "POST"])
 @login_required
@@ -369,7 +369,7 @@ def task(id):
             collaborators = debyte(task['collaborators'])
             for collaborator in collaborators:
                 person = db.execute("SELECT * FROM users WHERE id = :id", id=collaborator)[0]
-                person['points'] += points
+                person['points'] += points if collaborator != session["user_id"] else 0
                 person['numcomplete'] += 1
                 person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
                 person['notifications'].insert(0, {
