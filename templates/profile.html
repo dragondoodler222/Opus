@@ -14,10 +14,11 @@
 
 {% block mainnocont %}
 	<div class="profile-outer">
-		<div class="name-wrapper">
-			{% if user["id"] == other_user["id"] %}
-				<h1 id = "greeting">Hi {{user["username"]}}!</h1>
+		{% if user["id"] == other_user["id"] %}
+				<h1 id = "greeting">This is your profile.</h1>
 			{% endif %}
+		<div class="name-wrapper">
+			
 			<div class = "name-section">
 			 	<div style="display: flex; align-items: center;">
 					<div style = "margin-left: 12px;">

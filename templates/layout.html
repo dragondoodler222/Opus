@@ -38,12 +38,12 @@
                     </ul>
 
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li style="position: relative; transform:translateX(8px) translateY(7.5px);"class="nav-item"><a class="nav-link" href="/notifications"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                        <li style="margin:auto 0; position: relative; transform:translateX(8px)"class="nav-item"><a class="nav-link" href="/notifications"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
   <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
 
 </svg></a><span style="display:{{ "none" if user["notification-amount"] == 0 else "flex" }};" class="notification-circle">{{user["notification-amount"]}}</span></li>
                         <li class="nav-item">
-                            <div id="user-information-dropdown">
+                            <div id="user-information-dropdown" style="margin-right: 6px;">
                               <button onclick="showUserDropdown()" id="user-information-dropname" class="nav-link">{{ session.user_name }} <span class="dropdown-caret"></span></button>
                               <div id="user-information-dropdown-content">
                                 <a class="nav-link" href="/profile/{{ session.user_name }}">Profile</a>
@@ -55,8 +55,9 @@
                         </li>
 
                         <li class="nav-item">
-                            <div style = "margin-left: -4px;">
-                                <svg viewBox="0 0 36 36" style="transform: translateY(8px); width: 40px;">
+                            <div style = "position:absolute;
+                            bottom:calc(4vh - .85em);right: 4px;margin:0vh 4px;margin-left: 4px;">
+                                <svg viewBox="0 0 36 36" style=" width: 1.3em;">
                                     <path class="level-display-bg"
                                 d="M18 2.0845
                                   a 15.9155 15.9155 0 0 1 0 31.831

@@ -161,11 +161,16 @@ h1#greeting {
 	width: 100%;
 	text-align: center;
 	display: block;
-	font-weight: bold;
-	background: rgb(45,70,185);
+	font-size: 1.2em;
+	/*position: absolute;
+	top:8vh;*/
+	padding: 10px;
+	background: var(--background-1);
+	color: var(--text-medium-2);
+	/*background: rgb(45,70,185);
 background: linear-gradient(32deg, rgba(45,70,185,1) 0%, rgba(240,55,165,1) 100%);
 	-webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: transparent;*/
 }
 
 
