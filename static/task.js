@@ -167,3 +167,8 @@ $("#sendmsg").submit(function (e) {
     });
 }); 
 
+function edit(){
+	let task_id = document.getElementById("task_id").value;
+	window.location.href = "/edit_task/" + task_id;
+}
+

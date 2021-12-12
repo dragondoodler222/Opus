@@ -196,7 +196,17 @@ def edit_information():
 @login_required
 def edit_task(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
-    return render_template("edit_task.html", user=getuser(session, db), task = task)
+    #print(task['languages'])
+    languages = task['languages'].replace(",","").split(' ')
+    return render_template("edit_task.html", user=getuser(session, db), task = task, languages=languages)
+
+@app.route("/editTask/<id>", methods = ["GET", "POST"])
+@login_required
+def editTask(id):
+    task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+    print(request.form['description'])
+    db.execute("UPDATE tasks SET description = :d, title = :name, cmax = :cmax, hmax = :hmax, hmin = :hmin, languages = :languages WHERE id = :id", d = request.form['description'], name= request.form['title'], cmax= request.form['cmax'], hmax= request.form['hmax'], hmin= request.form['hmin'], languages= request.form['languages'], id=id)
+    return redirect("/task/"+id)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

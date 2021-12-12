@@ -52,3 +52,7 @@ langInput.addEventListener('keyup', (e) => {
 });
 
 //form.addEventListener('submit', handleFormSubmit);
+function removeTag(id){
+  const item = document.getElementById(id)
+  item.parentElement.remove();
+}
