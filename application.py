@@ -192,6 +192,12 @@ def edit_information():
         
     return render_template("edit_information.html",user=user,email=email,task_count=len(tasks))
 
+@app.route("/edit_task/<id>", methods = ["GET", "POST"])
+@login_required
+def edit_task(id):
+    task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+    return render_template("edit_task.html", user=getuser(session, db), task = task)
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
