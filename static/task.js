@@ -5,7 +5,6 @@ function updateScroll(){
         element.scrollTop = element.scrollHeight;
     }
 }
-
 setInterval(updateScroll,100);
 var messel = document.getElementsByClassName("messages")[0];
 $(".messages").on('scroll', function(){
@@ -41,13 +40,13 @@ openDeleteConfirmModal = () => {
 };
 
 function deleteTask() {
-	$.post("",{request_type: "delete"},() => window.location = '/');
+	$.post("",{request_type: "delete"},() => window.location = '/opus');
 	modal.style.display = "none";
 }
 
 function completeTask() {
 	//POST HERE
-	$.post("",{request_type: "complete"},() => window.location = '/');
+	$.post("",{request_type: "complete"},() => window.location = '/opus');
 
 	modal2.style.display = "none";
 }
@@ -87,7 +86,7 @@ let checker;
 let task = document.getElementById("task_id");
 let task_id = document.getElementById("task_id").value;
 function get_messages() {
-	$.getJSON('/get_messages/' + task_id, {
+	$.getJSON('/opus/get_messages/' + task_id, {
 	     //Get a JSON formatted value from the route _get_words, which will allow flask in python to communicate with AJAX in JS
 	}, function(data) {
 		let msgDiv = document.getElementById("messages")
@@ -115,11 +114,13 @@ function get_messages() {
 				msgDiv.appendChild(newMsg);
 			}
 		}
-		checker = messages
+		checker = messages;
+		updateScroll();
 	});
 	// if (r){
 	// 	setTimeout(get_messages(true), 50000);
 	// }
+	updateScroll();
 }
 const interval = setInterval(function() {
     get_messages()
@@ -153,15 +154,13 @@ get_messages();
 formEl = document.getElementById("txtbox")
 $("#sendmsg").submit(function (e) {
 	e.preventDefault();
-	clientSideMessage(formEl.value);
+	// clientSideMessage(formEl.value);
 	$.ajax({ 
-	    url: '/createPost', 
+	    url: '/opus/createPost', 
 	    type: 'POST', 
 	    data: $('#sendmsg').serialize(),
 	    success: data => {
 	    	formEl.value = "";
-	    	let msgDiv = document.getElementById("messages");
-	    	msgDiv.removeChild(msgDiv.lastChild);
     		get_messages();
 	    }
     });
@@ -169,6 +168,5 @@ $("#sendmsg").submit(function (e) {
 
 function edit(){
 	let task_id = document.getElementById("task_id").value;
-	window.location.href = "/edit_task/" + task_id;
+	window.location.href = "/opus/edit_task/" + task_id;
 }
-

@@ -6,7 +6,7 @@
 
 
 {% block head %}
-    <link href="/static/profile.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='profile.css') }}" rel="stylesheet">
 {% endblock %}
 
 
@@ -51,7 +51,7 @@
 
 		<div class = "information">
 			<h2>Edit Information: </h2>
-				<form id = "taskform" action="/editinfo" method="post">
+				<form id = "taskform" action="/opus/editinfo" method="post">
 	        <div class="form-group">
 	          <label>
 	          	Email Address: <input autocomplete="off" autofocus class="form-control" name="email" id = "email" placeholder="{{email}}" type="email">

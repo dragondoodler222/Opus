@@ -12,7 +12,7 @@
 
         {% block head %}{% endblock %}
 
-        <link href="/static/styles.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
 
         
 
@@ -26,19 +26,19 @@
 
     <body>
         <nav style = "height: 8vh" class="navbar navbar-expand-md navbar-light bg-light border">
-            <a class="navbar-brand" href="/"><img width="40em" src="/static/images/logo.png"></a>
+            <a class="navbar-brand" href="/opus"><img width="40em" src="{{ url_for('static', filename='images/logo.png') }}"></a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbar">
                 {% if session.user_id %}
                     <ul class="navbar-nav mt-2">
-                        <li class="nav-item"><a class="nav-link" href="/taskCreation">Create Task</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/opus/taskCreation">Create Task</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/opus/search">Search</a></li>
                     </ul>
 
                     <ul class="navbar-nav ml-auto mt-2">
-                        <li style="margin:auto 0; position: relative; transform:translateX(8px)"class="nav-item"><a class="nav-link" href="/notifications"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
+                        <li style="margin:auto 0; position: relative; transform:translateX(8px)"class="nav-item"><a class="nav-link" href="/opus/notifications"><svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" class="bi bi-bell-fill" viewBox="0 0 16 16">
   <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zm.995-14.901a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901z"/>
 
 </svg></a><span style="display:{{ "none" if user["notification-amount"] == 0 else "flex" }};" class="notification-circle">{{user["notification-amount"]}}</span></li>
@@ -46,10 +46,10 @@
                             <div id="user-information-dropdown" style="margin-right: 6px;">
                               <button onclick="showUserDropdown()" id="user-information-dropname" class="nav-link">{{ session.user_name }} <span class="dropdown-caret"></span></button>
                               <div id="user-information-dropdown-content">
-                                <a class="nav-link" href="/profile/{{ session.user_name }}">Profile</a>
-                                <a class="nav-link" href="/editinfo">Edit Information</a>
+                                <a class="nav-link" href="/opus/profile/{{ session.user_name }}">Profile</a>
+                                <a class="nav-link" href="/opus/editinfo">Edit Information</a>
                                 <span class="sep"></span>
-                                <a class="nav-link" href="/logout">Logout</a>
+                                <a class="nav-link" href="/opus/logout">Logout</a>
                               </div>
                             </div>
                         </li>
@@ -79,8 +79,8 @@
                     </ul>
                 {% else %}
                     <ul class="navbar-nav ml-auto mt-2" style="display:flex; align-items: center;padding: 10px;">
-                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-primary" style = "height: 3.5vh;color:white;margin-left:10px;display: flex;justify-content: center;align-items: center;" href="/register">Sign Up</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/opus/login">Log In</a></li>
+                        <li class="nav-item"><a class="nav-link btn btn-primary" style = "height: 3.5vh;color:white;margin-left:10px;display: flex;justify-content: center;align-items: center;" href="/opus/register">Sign Up</a></li>
                     </ul>
                 {% endif %}
             </div>
@@ -103,7 +103,7 @@
         <footer>
             <!-- Do we wwant a footer?-->
         </footer>
-        <script src="/static/scripts.js"></script>
+        <script src="{{ url_for('static', filename='scripts.js') }}"></script>
     </body>
 
 </html>

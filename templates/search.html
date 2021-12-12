@@ -6,15 +6,15 @@
 
 
 {% block head %}
-    <link href="/static/browse.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='browse.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block main %}
-	<form id="form" action="/searchresult" method="post">
+	<form id="form" action="/opus/searchresult" method="post">
 		<input class="form-control" id="search" name="search" placeholder="Search Something!" style="font-family:Arial, FontAwesome">
 	</div>
 	{% for task in tasks %}
-		<a class = "div-link" href="/task/{{task.id}}">
+		<a class = "div-link" href="/opus/task/{{task.id}}">
 			<div class="task">
 				<span class="task-points">{{ task["points"] }} pts</span>
 				<span class="task-name">{{ task["title"] }}</span>

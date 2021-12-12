@@ -28,6 +28,8 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response
 
+root = '/opus'
+
 # Custom filter
 #app.jinja_env.filters["usd"] = usd
 
@@ -152,7 +154,7 @@ def notifications():
             db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=person['id'], c=tobinary(othersNotifications))
 
 
-        return redirect("/notifications")
+        return redirect(root+"/notifications")
     else:
         user=getuser(session, db)
         tasks = db.execute("SELECT * FROM tasks WHERE creator = :id", id=session["user_id"])
@@ -206,7 +208,7 @@ def editTask(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
     print(request.form['description'])
     db.execute("UPDATE tasks SET description = :d, title = :name, cmax = :cmax, hmax = :hmax, hmin = :hmin, languages = :languages WHERE id = :id", d = request.form['description'], name= request.form['title'], cmax= request.form['cmax'], hmax= request.form['hmax'], hmin= request.form['hmin'], languages= request.form['languages'], id=id)
-    return redirect("/task/"+id)
+    return redirect(root+"/task/"+id)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -244,7 +246,7 @@ def login():
                 session["user_name"] = rows[0]["username"]
 
                 # Redirect user to home page
-                return redirect("/")
+                return redirect(root+"/")
 
     if error is not None: flash(error)
     return render_template("login.html")
@@ -258,7 +260,7 @@ def logout():
     session.clear()
 
     # Redirect user to login form
-    return redirect("/")
+    return redirect(root+"/")
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -285,7 +287,7 @@ def register():
             session["user_id"] = db.execute("SELECT count(*) FROM users")[0]['count(*)']
             session["user_name"] = db.execute("SELECT * FROM users WHERE id = :id", id=session["user_id"])[0]['username']
 
-            return redirect("/")
+            return redirect(root+"/")
 
     if error is not None: flash(error)
 
@@ -300,7 +302,7 @@ def taskCreation():
 def createTask():
     task = request.form.to_dict()
     db.execute("INSERT INTO tasks (id, title, description, languages, hmin, hmax, cmax, collaborators, creator) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",db.execute("SELECT count(*) FROM tasks")[0]['count(*)'] + 1, task['title'], task['description'], task['languages'], task['hmin'], task['hmax'], task['cmax'], tobinary([session['user_id']]), session['user_id'])
-    return redirect("/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
+    return redirect(root+"/task/" + str(db.execute("SELECT count(*) FROM tasks")[0]['count(*)']))
 
 @app.route("/task/<id>", methods=["GET", "POST"])
 @login_required
@@ -361,7 +363,7 @@ def task(id):
                 })
                 db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
             db.execute("DELETE FROM tasks WHERE id = :id", id=id)
-            return redirect("/")
+            return redirect(root+"/")
         elif request.form['request_type'] == 'complete':
             points = calculate_points(task)
             collaborators = debyte(task['collaborators'])
@@ -379,7 +381,7 @@ def task(id):
                 db.execute("UPDATE users SET points = :p WHERE id = :id", p=person['points'], id=collaborator)
                 db.execute("UPDATE users SET numcomplete = :p WHERE id = :id", p=person['numcomplete'], id=collaborator)
             db.execute("DELETE FROM tasks WHERE id = :id", id=id)
-            return redirect("/")
+            return redirect(root+"/")
         elif request.form['request_type'] == 'join': 
             person = db.execute("SELECT * FROM users WHERE id = :id", id=task['creator'])[0]
             person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
@@ -390,14 +392,14 @@ def task(id):
                 "task-name" : task['title']
             })
             db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=task['creator'])
-            return redirect("/task/" + id)
+            return redirect(root+"/task/" + id)
 
 
         elif request.form['request_type'] == 'leave':
             task['collaborators'] = debyte(task['collaborators'])
             task['collaborators'].remove(session['user_id'])
             db.execute("UPDATE tasks SET collaborators = :p WHERE id = :id", id=id, p=tobinary(task['collaborators']))
-            return redirect("/task/" + id)
+            return redirect(root+"/task/" + id)
         elif request.form['request_type'] == 'create_message':
             
             task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]

@@ -147,9 +147,16 @@ fill: none;
 .level {
   fill: var(--focus-pink);
   font-family: sans-serif;
-  font-size: 1.2em;
+  font-size: 1.5vw;
   text-anchor: middle;
 }
+
+@media only screen and (min-width: 2800px) {
+  .level {
+    font-size: .3vh;
+  }
+}
+
 
 .notification-circle {
   content: "";

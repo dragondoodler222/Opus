@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block head %}
-<link href="/static/register.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='register.css')}}" rel="stylesheet">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 {% endblock %}
@@ -17,7 +17,7 @@
             <p>Sign up to start creating and joining tasks!</p>
         </div>
         
-        <form action="/register" method="post">
+        <form action="/opus/register" method="post">
             <div class="form-group input-area">
                 <input autocomplete="off" autofocus class="form-control" name="username" placeholder="&#xf007;  Username" type="text" style="font-family:Arial, FontAwesome">
             </div>

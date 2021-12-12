@@ -6,7 +6,7 @@
 
 
 {% block head %}
-    <link href="/static/notifications.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='notifications.css') }}" rel="stylesheet">
 {% endblock %}
 
 
@@ -17,7 +17,7 @@
       {% for notification in notifications %}
       <tr>
         {% if notification["format"] == "join-prompt"%}
-          <td><a href="/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{notification['task-name']}}</a></td>
+          <td><a href="/opus/profile/{{notification["user"]}}">{{notification["user"]}}</a> wants to join <a>{{notification['task-name']}}</a></td>
           <td class="acceptreject">
             <button onclick = "postData(1,{{notification['task-id']}}, {{'\"'+notification['user']+'\"'}}, {{i.value}})" class="btn btn-primary accept-button">Accept</button>
             <button onclick = "postData(-1, {{notification['task-id']}}, {{'\"'+notification['user']+'\"'}}, {{i.value}})" class="btn btn-primary reject-button">Reject</button>
@@ -44,5 +44,5 @@
     
   </table>
 
-  <script src="/static/notifications.js"></script>
+  <script src="{{ url_for('static', filename='notifications.js') }}"></script>
 {% endblock %}

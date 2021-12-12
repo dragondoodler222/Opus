@@ -6,7 +6,7 @@
 
 
 {% block head %}
-    <link href="/static/task.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='task.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 {% endblock %}
@@ -19,7 +19,7 @@
       <td>id: {{task.id}}</td>
     </tr> -->
     <tr>
-      <td class="title"><h1>{{ task.title }}</h1><span class="creator-text">by <a href="/profile/{{creator.username}}">{{creator.username}}</a></span></td><td class="pts-td"><span class="points"><span>{{task.points}}</span><div> pts</div></span></td>
+      <td class="title"><h1>{{ task.title }}</h1><span class="creator-text">by <a href="/opus/profile/{{creator.username}}">{{creator.username}}</a></span></td><td class="pts-td"><span class="points"><span>{{task.points}}</span><div> pts</div></span></td>
 
     </tr>
     <tr>
@@ -36,7 +36,7 @@
         <div class="stats">
         <span class="hours-text">{{task.hmin}}-{{task.hmax}} hrs</span>
         <span class="languages-text">Languages: {{languages_string}}</span>
-        <span class="collaborators-text">Collaborators ({{len(collaborators)}}): {% for i,c in enumerate(collaborators)%}<a href="/profile/{{c['username']}}">{{c['username']}}</a>{% if i < len(collaborators)-1%}, {% endif %}{% endfor %}</span>
+        <span class="collaborators-text">Collaborators ({{len(collaborators)}}): {% for i,c in enumerate(collaborators)%}<a href="/opus/profile/{{c['username']}}">{{c['username']}}</a>{% if i < len(collaborators)-1%}, {% endif %}{% endfor %}</span>
         <span class="cmax-text">Max Collaborators: {{task.cmax}}</span>
       </div>
       </td>
@@ -78,7 +78,7 @@
           {% if is_user_task or is_collab_task %}
           {% for i,c in enumerate(collaborators)%}
             <tr>
-              <td style="text-align:right;"><a href="/profile/{{c['username']}}">{{c['username']}}</a></td>
+              <td style="text-align:right;"><a href="/opus/profile/{{c['username']}}">{{c['username']}}</a></td>
               <td style="text-align:left;">{{c['email']}}</td>
             </tr>
           {% endfor %}
@@ -138,5 +138,5 @@
       msgDiv.appendChild(newMsg);
     }
   </script>
-<script src="/static/task.js"></script>
+<script src="{{ url_for('static', filename='task.js') }}"></script>
 {% endblock %}

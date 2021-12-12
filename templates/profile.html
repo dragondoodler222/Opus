@@ -6,7 +6,7 @@
 
 
 {% block head %}
-    <link href="/static/profile.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='profile.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 {% endblock %}
@@ -68,7 +68,7 @@
 			<h2>Active Tasks</h2>
 			<div class = "a-tasks">
 				{% for task in active_tasks %}
-					<a class = "div-link" href="/task/{{task.id}}">
+					<a class = "div-link" href="/opus/task/{{task.id}}">
 						<div class="task">
 							<span class="task-name">{{ task["title"] }}</span>
 							<span class="task-creator">{{ task["creator"] }}</span>
