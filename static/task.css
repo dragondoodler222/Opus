@@ -165,4 +165,19 @@ td.title {
   line-height: .8;
 }
 
+.chatroom{
+  border-radius: 25px;
+  border: 1px solid black;
+}
+
+.chat{
+  margin: 20px;
+}
+
+.messages{
+  overflow-y: scroll;
+  overflow-wrap: break-word;
+  height: 250px;
+}
+
 

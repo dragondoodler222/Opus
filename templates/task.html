@@ -86,24 +86,20 @@
 </div>
 {% if is_user_task or is_collab_task %}
 <div class="chatroom" id = "chatroom">
-  {% if lenPosts > 0 %}
-    <!-- {% for p in posts %}
-    <div class="post">
-      <p>{{ uid_to_username[p.author] }}: {{ p.message }}</p>
-    </div>
-    {% endfor %} -->
-  {% else %}
+  <div class="chat">
+    {% if lenPosts == 0 %}
     <p>There are no messages in this chat. Be the first to send a message.</p>
-  {% endif %}
-  <div class = messages id = messages style="overflow-y:auto">
-    
+    {% endif %}
+    <div class = 'messages' id = 'messages' style="overflow-y:auto">
+      
+    </div>
+    <form id = "sendmsg" action="" method="post">
+      <input type="hidden" name="request_type" value="create_message">
+      <input type="hidden" name="author" value="{{ user.id }}">
+      <input type="hidden" id="task_id" name="task" value="{{ task.id }}">
+      <input type="text" id = "txtbox" autocomplete="off" name="message" placeholder="Message {{ task.title }}">
+    </form>
   </div>
-  <form id = "sendmsg" action="" method="post">
-    <input type="hidden" name="request_type" value="create_message">
-    <input type="hidden" name="author" value="{{ user.id }}">
-    <input type="hidden" id="task_id" name="task" value="{{ task.id }}">
-    <input type="text" id = "txtbox" autocomplete="off" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
-  </form>
 </div>
 {% endif %}
 <div id="project-modal" class="modal">

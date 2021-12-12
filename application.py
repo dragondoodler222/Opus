@@ -407,7 +407,7 @@ def createpost():
 
 @app.route("/get_messages/<id>", methods=["GET", "POST"])
 def get_messages(id):
-    posts = db.execute("SELECT * FROM messages WHERE task = :task ORDER BY id ASC", task=id)[-6:]
+    posts = db.execute("SELECT * FROM messages WHERE task = :task ORDER BY id ASC", task=id)
     uid_to_username = {}
     for p in posts:
         uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
