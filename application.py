@@ -401,8 +401,8 @@ def createpost():
     # uid_to_username = {}
     # for p in posts:
     #     uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
-    print(posts)
-    #return ":D"
+    #print(posts)
+    return ":D"
 
 @app.route("/get_messages/<id>", methods=["GET", "POST"])
 def get_messages(id):
@@ -411,7 +411,7 @@ def get_messages(id):
     for p in posts:
         uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
 
-    return jsonify(result=posts)
+    return jsonify(result={"posts" : posts,"uid_to_username" : uid_to_username})
 
 
 def errorhandler(e):

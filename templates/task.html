@@ -72,35 +72,40 @@
 <div style="display:flex;justify-content: center;">
 <table class="table emails" style="text-align:center;width:25%;">
   <tbody>
+    {% if is_user_task or is_collab_task %}
     {% for i,c in enumerate(collaborators)%}
       <tr>
         <td style="text-align:right;"><a href="/profile/{{c['username']}}">{{c['username']}}</a></td>
         <td style="text-align:left;">{{c['email']}}</td>
       </tr>
     {% endfor %}
+    {% endif %}
     
   </tbody>
 </table>
 </div>
-
+{% if is_user_task or is_collab_task %}
 <div class="chatroom" id = "chatroom">
   {% if lenPosts > 0 %}
-    {% for p in posts %}
+    <!-- {% for p in posts %}
     <div class="post">
       <p>{{ uid_to_username[p.author] }}: {{ p.message }}</p>
     </div>
-    {% endfor %}
+    {% endfor %} -->
   {% else %}
     <p>There are no messages in this chat. Be the first to send a message.</p>
   {% endif %}
+  <div class = messages id = messages style="overflow-y:auto">
+    
+  </div>
   <form id = "sendmsg" action="" method="post">
     <input type="hidden" name="request_type" value="create_message">
     <input type="hidden" name="author" value="{{ user.id }}">
     <input type="hidden" id="task_id" name="task" value="{{ task.id }}">
-    <input type="text" autocomplete="off" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
+    <input type="text" id = "txtbox" autocomplete="off" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
   </form>
 </div>
-
+{% endif %}
 <div id="project-modal" class="modal">
   <div class="modal-content">
     <span class="close">&times;</span>
