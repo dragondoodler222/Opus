@@ -309,10 +309,11 @@ def task(id):
         has_requested = False
         print(person["notifications"])
         for notif in person['notifications']:
-            print(notif["user"])
-            if notif["user"] == session["user_name"]:
-                has_requested = True
-                break
+            if notif["format"] == "join-prompt":
+                print(notif["user"])
+                if notif["user"] == session["user_name"]:
+                    has_requested = True
+                    break
         print(has_requested)
 
         # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
