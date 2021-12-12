@@ -83,7 +83,7 @@
 </table>
 </div>
 
-<div class="chatroom">
+<div class="chatroom" id = "chatroom">
   {% if lenPosts > 0 %}
     {% for p in posts %}
     <div class="post">
@@ -92,12 +92,13 @@
     {% endfor %}
   {% else %}
     <p>There are no messages in this chat. Be the first to send a message.</p>
-    <form id = "sendmsg" action="">
-      <input type="hidden" name="author" value="{{ user.id }}">
-      <input type="hidden" name="task" value="{{ task.id }}">
-      <input type="text" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
-    </form>
   {% endif %}
+  <form id = "sendmsg" action="" method="post">
+    <input type="hidden" name="request_type" value="create_message">
+    <input type="hidden" name="author" value="{{ user.id }}">
+    <input type="hidden" id="task_id" name="task" value="{{ task.id }}">
+    <input type="text" autocomplete="off" style="width: 400px;" name="message" placeholder="Message {{ task.title }}">
+  </form>
 </div>
 
 <div id="project-modal" class="modal">

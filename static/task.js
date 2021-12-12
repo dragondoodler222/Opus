@@ -52,11 +52,34 @@ document.getElementsByClassName("modal2")[0].onclick = function(event) {
 }
 
 
+let task = document.getElementById("task_id");
+	let task_id = document.getElementById("task_id").value;
+	let response = $.getJSON('/get_messages/' + task_id, {
+	     //Get a JSON formatted value from the route _get_words, which will allow flask in python to communicate with AJAX in JS
+	}, function(data) {
+		let msgDiv = document.getElementById("chatroom")
+		console.log(data.result)
+		let response = data.result;
+		for (ind in response){
+			let newMsg = document.createElementByTag("div");
+			let content = document.createElementByTag("p")
+			console.log(response[ind])
+		}
+	});
+
+	
+
 
 $(document).ready(function () {
-	$("#sendmsg").submit(function (e) {
-		$.post("/createPost",{data: $('#sendmsg').serialize()},() => window.location.reload());
-	});
-});
 
+	$("#sendmsg").submit(function (e) {
+		e.preventDefault();
+		let response = $.ajax({ 
+		    url: '/createPost', 
+		    type: 'POST', 
+		    data: $('#sendmsg').serialize()
+	    });
+	    console.log(response)
+	}); 
+});
 
