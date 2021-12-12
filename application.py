@@ -119,7 +119,7 @@ def notifications():
 
     if request.method == "POST":
         notifications.pop(int(request.form['i']))
-        print("BANANA (GUY) (BILL)" +request.form['i'])
+        # print("BANANA (GUY) (BILL)" +request.form['i'])
         db.execute("UPDATE users SET notifications = :c WHERE id = :id", id=session['user_id'], c=tobinary(notifications))
 
         if request.form["request_type"] == "Accept":
@@ -196,7 +196,17 @@ def edit_information():
 @login_required
 def edit_task(id):
     task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
-    return render_template("edit_task.html", user=getuser(session, db), task = task)
+    #print(task['languages'])
+    languages = task['languages'].replace(",","").split(' ')
+    return render_template("edit_task.html", user=getuser(session, db), task = task, languages=languages)
+
+@app.route("/editTask/<id>", methods = ["GET", "POST"])
+@login_required
+def editTask(id):
+    task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
+    print(request.form['description'])
+    db.execute("UPDATE tasks SET description = :d, title = :name, cmax = :cmax, hmax = :hmax, hmin = :hmin, languages = :languages WHERE id = :id", d = request.form['description'], name= request.form['title'], cmax= request.form['cmax'], hmax= request.form['hmax'], hmin= request.form['hmin'], languages= request.form['languages'], id=id)
+    return redirect("/task/"+id)
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -316,20 +326,27 @@ def task(id):
         person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
         
         has_requested = False
-        print(person["notifications"])
+        # print(person["notifications"])
         for notif in person['notifications']:
             if notif["format"] == "join-prompt":
                 if "user" in notif and notif["user"] == session["user_name"]:
                     has_requested = True
                     break
-        print(has_requested)
+        # print(has_requested)
 
         # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
-        return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
+        formatted_languages = task["languages"].replace(",","").split(" ")
+        languages_string = ""
+        for i in range(len(formatted_languages)):
+            if len(formatted_languages[i]) > 0:
+                if i == 0:
+                    languages_string += formatted_languages[i]
+                else:
+                    languages_string += ", " + formatted_languages[i]
+        print(languages_string)
+
+        return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts), languages_string=languages_string)
     else:
-        print(request.form['request_type'])
-        print("BIBITY BOBITY UR BOP IS A BOOP")
-        print(request.form["request_type"])
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         # four options given - delete, complete, join, leave
         if request.form['request_type'] == 'delete':
@@ -382,7 +399,7 @@ def task(id):
             db.execute("UPDATE tasks SET collaborators = :p WHERE id = :id", id=id, p=tobinary(task['collaborators']))
             return redirect("/task/" + id)
         elif request.form['request_type'] == 'create_message':
-            print("still alive bob")
+            
             task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
             ids = debyte(task['collaborators'])
             task['collaborators'] = [db.execute("SELECT * FROM users WHERE id = :id", id=a)[0] for a in ids]
@@ -397,22 +414,22 @@ def task(id):
             uid_to_username = {}
             for p in posts:
                 uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
-            print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
+            # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
             return render_template("task.html",is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
 
 
 @app.route("/createPost", methods=["GET", "POST"])
 @login_required
 def createpost():
-    #print("AGLIS GUJALKS HGJLAI KGJSLDIDKGJOIASLGJAILTJGROISLTGJASLKJGAIOSLFJIO")
-    print(request.form)
+    # print("AGLIS GUJALKS HGJLAI KGJSLDIDKGJOIASLGJAILTJGROISLTGJASLKJGAIOSLFJIO")
+    # print(request.form)
     db.execute("INSERT INTO messages (id, author, task, message) VALUES (?, ?, ?, ?)", db.execute("SELECT count(*) FROM messages")[0]['count(*)'] + 1, request.form["author"], request.form["task"], request.form["message"])
     # task = db.execute("SELECT * FROM tasks WHERE id = :id", id=request.form['task'])[0]
     # posts = db.execute("SELECT * FROM messages WHERE task = :task ORDER BY id ASC", task=id)[-6:]
     # uid_to_username = {}
     # for p in posts:
     #     uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
-    #print(posts)
+    # print(posts)
     return ":D"
 
 @app.route("/get_messages/<id>", methods=["GET", "POST"])

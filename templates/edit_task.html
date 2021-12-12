@@ -25,26 +25,26 @@
      
      <div class = "wrap">
       
-      <form id = "taskform" action="/createTask" method="post">
+      <form id = "taskform" action="/editTask/{{ task.id }}" method="post">
         <div class="form-group">
           <label style = "padding-right: 10px;">
-            <input autocomplete="off" autofocus class="form-control" name="title" id = "title" placeholder="{{ task.title }}" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="title" id = "title" placeholder="{{ task.title }}" type="text" value="{{ task.title }}">
           </label>
           <span class="input-group-btn" style="width:0px;"></span>            
           <label>
-            <input class="form-control" min=2 max=10 name="cmax" placeholder="{{ task.cmax }} (2-10)" id="cmax" type="number">
+            <input class="form-control" min=2 max=10 name="cmax" placeholder="{{ task.cmax }}" id="cmax" type="number" value="{{ task.cmax }}">
           </label>
         </div>
         <div class="form-group" style="padding-top: 10px;">
           <label style="padding-right: 10px;">
-            <input class="form-control" name="hmin" min=1 onchange="document.getElementById('hmax').min = this.value;" placeholder="{{ hmin }}" id="hmin" type="number">
+            <input class="form-control" name="hmin" min=1 onchange="document.getElementById('hmax').min = this.value;" placeholder="{{ task.hmin }}" id="hmin" type="number" value="{{ task.hmin }}">
           </label>
           <label>
-            <input class="form-control" name="hmax" max = 4096 onchange="document.getElementById('hmin').max = this.value;" placeholder="Maximum Hours" id="hmax" type="number">
+            <input class="form-control" name="hmax" max = 4096 onchange="document.getElementById('hmin').max = this.value;" placeholder="{{ task.hmax }}" id="hmax" type="number" value="{{ task.hmax }}">
           </label>
         </div>
         <div class="form-group">
-            <textarea class="form-control" name="description" placeholder="Description" id = "description" type="text"></textarea>
+            <textarea class="form-control" name="description" placeholder="{{ task.description }}" id = "description" type="text">{{ task.description }}</textarea>
         </div>
         <!-- <div class="form-group">
             <input class="form-control" name="languages" placeholder="Languages Needed" type="text" data-role = "tagsinput">
@@ -57,8 +57,14 @@
                 <p>Add a comma after each language</p>
               </div>
               <input class="form-control" id = "languages" name="test" placeholder="Languages Needed" type="text" data-role = "tagsinput">
-              <input type="hidden" name = "languages" id="hiddenInput" value="">
-              <div class = "language-container" id = "langtags"></div>
+              <input type="hidden" name = "languages" id="hiddenInput" value="{{ task.languages }}">
+              <div class = "language-container" id = "langtags">
+                {% for language in languages %}
+                  {% if language != "" %}
+                  <span class = "tag">{{language}}<span class="remove-tag" id = "remove-tag" onClick="removeTag(this.id)">&#10006;</span></span>
+                  {% endif %}
+                {% endfor %}
+              </div>
             </div>
           </div>
         </label>
