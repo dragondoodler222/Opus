@@ -427,6 +427,10 @@ def get_messages(id):
 def solve(s0, s1):
     s0 = s0.lower()
     s1 = s1.lower()
+    s1 = s1.replace(",","")
+    s1 = s1.replace(".","")
+    s0 = s0.replace(",","")
+    s0 = s0.replace(".","")
     s0List = s0.split(" ")
     s1List = s1.split(" ")
     stopwords = set(['the', 'is', 'and', 'a', 'i']) # good enough, okay?
@@ -438,12 +442,12 @@ def solve(s0, s1):
 def searchf():
     return render_template("search.html", tasks=[], user=getuser(session, db))
 
-@app.route("/searchresult", methods=["POST"])
+@app.route("/searchresult", methods=["POST", "GET"])
 @login_required
 def searchr():
     tasks = db.execute("SELECT * FROM tasks")
     query = request.form.get("search")
-    newtasks = sorted(tasks, key=lambda x : solve((x['title'] + x['description']), query), reverse=True)
+    newtasks = sorted(tasks, key=lambda x : solve((x['title'] + " " + x['description'] + " " + x['languages']), query), reverse=True)
     if len(newtasks) > 10:
         newtasks = newtasks[:10]
     for task in newtasks:
