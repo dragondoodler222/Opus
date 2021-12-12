@@ -309,8 +309,7 @@ def task(id):
         has_requested = False
         print(person["notifications"])
         for notif in person['notifications']:
-            print(notif["user"])
-            if notif["user"] == session["user_name"]:
+            if "user" in notif and notif["user"] == session["user_name"]:
                 has_requested = True
                 break
         print(has_requested)
@@ -342,6 +341,7 @@ def task(id):
             for collaborator in collaborators:
                 person = db.execute("SELECT * FROM users WHERE id = :id", id=collaborator)[0]
                 person['points'] += points
+                person['numcomplete'] += 1
                 person['notifications'] = debyte(person['notifications']) if person['notifications'] != None else []
                 person['notifications'].insert(0, {
                     "format" : "complete",
@@ -350,6 +350,7 @@ def task(id):
                 })
                 db.execute("UPDATE users SET notifications = :p WHERE id = :id", p=tobinary(person['notifications']), id=collaborator)
                 db.execute("UPDATE users SET points = :p WHERE id = :id", p=person['points'], id=collaborator)
+                db.execute("UPDATE users SET numcomplete = :p WHERE id = :id", p=person['numcomplete'], id=collaborator)
             db.execute("DELETE FROM tasks WHERE id = :id", id=id)
             return redirect("/")
         elif request.form['request_type'] == 'join': 
