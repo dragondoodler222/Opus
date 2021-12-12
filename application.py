@@ -1,5 +1,6 @@
 import os
 
+from datetime import timedelta
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -16,6 +17,8 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 # Ensure responses aren't cached
 @app.after_request
@@ -414,6 +417,35 @@ def get_messages(id):
         uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
 
     return jsonify(result={"posts" : posts,"uid_to_username" : uid_to_username})
+
+def solve(s0, s1):
+    s0 = s0.lower()
+    s1 = s1.lower()
+    s0List = s0.split(" ")
+    s1List = s1.split(" ")
+    stopwords = set(['the', 'is', 'and', 'a', 'i']) # good enough, okay?
+    s0List = filter(lambda x : not (x in stopwords), s0List)
+    return len(list(set(s0List)&set(s1List)))
+
+@app.route("/search", methods=["GET"])
+@login_required
+def searchf():
+    return render_template("search.html", tasks=[], user=getuser(session, db))
+
+@app.route("/searchresult", methods=["POST"])
+@login_required
+def searchr():
+    tasks = db.execute("SELECT * FROM tasks")
+    query = request.form.get("search")
+    newtasks = sorted(tasks, key=lambda x : solve((x['title'] + x['description']), query), reverse=True)
+    if len(newtasks) > 10:
+        newtasks = newtasks[:10]
+    for task in newtasks:
+        creator = get_user_from_id(task['creator'],db)
+        task['creator'] = creator["username"]
+        task["collaborators-count"] = len(debyte(task['collaborators']))
+        task["points"] = calculate_points(task)
+    return render_template("search.html", tasks=newtasks, user=getuser(session, db))
 
 
 def errorhandler(e):

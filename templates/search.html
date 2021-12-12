@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Homepage
+{% endblock %}
+
+
+{% block head %}
+    <link href="/static/browse.css" rel="stylesheet">
+{% endblock %}
+
+{% block main %}
+	<form id="form" action="/searchresult" method="post">
+		<input class="form-control" id="search" name="search" placeholder="Search Something!" style="font-family:Arial, FontAwesome">
+	</div>
+	{% for task in tasks %}
+		<a class = "div-link" href="/task/{{task.id}}">
+			<div class="task">
+				<span class="task-points">{{ task["points"] }} pts</span>
+				<span class="task-name">{{ task["title"] }}</span>
+				<span class="task-creator">by {{ task["creator"] }}</span>
+				<span class="task-desc">{{ task["description"] }}</span>
+				<div class="task-stats">
+					<span class="task-time">{{ task["hmin"] }}-{{ task["hmax"] }} hours</span>
+					<span class="task-collaborator-count">{{ task["collaborators-count"] }}/{{ task["cmax"] }} collaborators</span>
+				</div>
+			</div>
+		</a>
+	{% endfor %}
+{% endblock %}
