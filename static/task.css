@@ -166,18 +166,69 @@ td.title {
 }
 
 .chatroom{
-  border-radius: 25px;
-  border: 1px solid black;
+  width: 20vw;
+  /*border-radius: 0 25px 25px 0;*/
+  border-left: 1px solid var(--border-1);
+  position: absolute;
+  right:0;
+  top: 8vh;
+  bottom: 0;
+  z-index: 2;
+  background: var(--foreground-1);
+  transition: .2s;
+}
+.chatroom.closed {
+  width: 0;
+}
+.chatroom .chatroomb4 span {
+  transition: .3s;
+}
+.chatroom.closed .chatroomb4 span {
+  transform: rotateZ(180deg);
+}
+.chatroomb4{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family:Arial, FontAwesome;
+  position: absolute;
+  width: 2vw;
+  top:0;
+  bottom: 0;
+  font-weight: bold;
+  background: var(--background-1);
+  font-size: 1.3em;
+  border-left: 1px solid var(--border-1);
+  border-right: 1px solid var(--border-1);
+cursor: pointer;
+  left: -2vw;
+}
+body {
+  overflow: hidden;
 }
 
 .chat{
   margin: 20px;
+  position: relative;
+  bottom: 0;
+  top:0;
 }
 
 .messages{
   overflow-y: scroll;
   overflow-wrap: break-word;
-  height: 250px;
+  height: 80vh;
 }
+#txtbox {
+  background: var(--foreground-0);
+  border: 1px solid var(--border-1);
+  padding: 0 10px;
+  margin-top: 5px;
+  width: 100%;
+  border-radius: 5px;
+  overflow: none;
+  text-overflow: ellipsis;
+}
+
 
 

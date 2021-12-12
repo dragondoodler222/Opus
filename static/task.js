@@ -1,5 +1,30 @@
+var scrolled = false;
+function updateScroll(){
+    if(!scrolled){
+        var element = document.getElementsByClassName("messages")[0];
+        element.scrollTop = element.scrollHeight;
+    }
+}
+
+setInterval(updateScroll,100);
+var messel = document.getElementsByClassName("messages")[0];
+$(".messages").on('scroll', function(){
+
+    scrolled=true;
+    if (messel.scrollTop == messel.scrollHeight- messel.clientHeight) {
+     	scrolled = false;
+    }
+});
+
+
+
+
 function postData(type) {
 	$.post("",{request_type: type},() => window.location.reload());
+}
+
+document.getElementsByClassName("chatroomb4")[0].onclick = el => {
+	document.getElementsByClassName("chatroom")[0].classList.toggle("closed");
 }
 
 
