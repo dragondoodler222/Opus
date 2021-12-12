@@ -309,9 +309,10 @@ def task(id):
         has_requested = False
         print(person["notifications"])
         for notif in person['notifications']:
-            if "user" in notif and notif["user"] == session["user_name"]:
-                has_requested = True
-                break
+            if notif["format"] == "join-prompt":
+                if "user" in notif and notif["user"] == session["user_name"]:
+                    has_requested = True
+                    break
         print(has_requested)
 
         # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
@@ -402,8 +403,8 @@ def createpost():
     # uid_to_username = {}
     # for p in posts:
     #     uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
-    print(posts)
-    #return ":D"
+    #print(posts)
+    return ":D"
 
 @app.route("/get_messages/<id>", methods=["GET", "POST"])
 def get_messages(id):
@@ -412,7 +413,7 @@ def get_messages(id):
     for p in posts:
         uid_to_username[p["author"]] = db.execute("SELECT * FROM users WHERE id = :id", id = p["author"])[0]["username"]
 
-    return jsonify(result=posts)
+    return jsonify(result={"posts" : posts,"uid_to_username" : uid_to_username})
 
 
 def errorhandler(e):
