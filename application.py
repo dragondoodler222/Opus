@@ -1,5 +1,6 @@
 import os
 
+from datetime import timedelta
 from cs50 import SQL
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from flask_session import Session
@@ -16,6 +17,8 @@ app = Flask(__name__)
 
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 # Ensure responses aren't cached
 @app.after_request
