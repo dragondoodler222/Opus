@@ -35,7 +35,7 @@
       <td colspan="2" width="100%">
         <div class="stats">
         <span class="hours-text">{{task.hmin}}-{{task.hmax}} hrs</span>
-        <span class="languages-text">Languages: {{task.languages}}</span>
+        <span class="languages-text">Languages: {{languages_string}}</span>
         <span class="collaborators-text">Collaborators ({{len(collaborators)}}): {% for i,c in enumerate(collaborators)%}<a href="/profile/{{c['username']}}">{{c['username']}}</a>{% if i < len(collaborators)-1%}, {% endif %}{% endfor %}</span>
         <span class="cmax-text">Max Collaborators: {{task.cmax}}</span>
       </div>

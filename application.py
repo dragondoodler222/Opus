@@ -335,7 +335,17 @@ def task(id):
         # print(has_requested)
 
         # print("HI GUYS ITS ME ALDEN UR FRIENDLY BOBERTA BAGGINS",posts)
-        return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts))
+        formatted_languages = task["languages"].replace(",","").split(" ")
+        languages_string = ""
+        for i in range(len(formatted_languages)):
+            if len(formatted_languages[i]) > 0:
+                if i == 0:
+                    languages_string += formatted_languages[i]
+                else:
+                    languages_string += ", " + formatted_languages[i]
+        print(languages_string)
+
+        return render_template("task.html",should_disable = ("disabled" if has_requested else ""),is_user_task=(task["creator"]==session["user_id"]), uid_to_username=uid_to_username,is_collab_task=(session["user_id"] in ids),enumerate=enumerate,len=len,collaborators=collaborators,task=task, creator=creator, user=getuser(session, db),issent=requestsent, posts = posts, lenPosts = len(posts), languages_string=languages_string)
     else:
         task = db.execute("SELECT * FROM tasks WHERE id = :id", id=id)[0]
         # four options given - delete, complete, join, leave
