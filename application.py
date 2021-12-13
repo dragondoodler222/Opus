@@ -75,6 +75,7 @@ def index():
 @app.route("/profile/<username>")
 @login_required
 def profile(username):
+    username = username.replace('%20',' ')
     user = getuser(session, db)
     if user["username"] != username:
         other_user = get_user_from_name(username, db)

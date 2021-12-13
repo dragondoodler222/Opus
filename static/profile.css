@@ -173,5 +173,9 @@ background: linear-gradient(32deg, rgba(45,70,185,1) 0%, rgba(240,55,165,1) 100%
   -webkit-text-fill-color: transparent;*/
 }
 
+.level2 {
+	font-size: 1.2em;
+}
+
 
 

@@ -62,7 +62,19 @@ window.addEventListener('DOMContentLoaded',function(){
         if (rv == false){
             ev.preventDefault();
         }
-        hiddenInput.value += ", " + languagesInput.value;
+        hiddenInput.value = ""
+        for (ind in spans){
+            if (spans[ind].classList.contains("tag")){
+              if (ind == 0){
+                    hiddenInput.value += spans[ind].textContent.slice(0, -1)
+                }else{
+                    hiddenInput.value += ", " + spans[ind].textContent.slice(0, -1)
+                }  
+            }
+            
+           
+        }
 
+        hiddenInput.value += ", " + languagesInput.value;
     });
 }); 

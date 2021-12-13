@@ -186,3 +186,9 @@ fill: none;
     background:var(--foreground-1);
   }
 }
+
+.level2 {
+  font-size: 1.2em;
+  text-anchor: middle;
+}
+
